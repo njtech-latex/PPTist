@@ -39,7 +39,7 @@ export const setTextAlign = (tr: Transaction, schema: Schema, alignment: string)
 
   if (!tasks.length) return tr
 
-  tasks.forEach(task => {
+  tasks.forEach((task) => {
     const { node, pos, nodeType } = task
     let { attrs } = node
     if (alignment) attrs = { ...attrs, align: alignment }
@@ -53,10 +53,6 @@ export const setTextAlign = (tr: Transaction, schema: Schema, alignment: string)
 export const alignmentCommand = (view: EditorView, alignment: string) => {
   const { state } = view
   const { schema, selection } = state
-  const tr = setTextAlign(
-    state.tr.setSelection(selection),
-    schema,
-    alignment,
-  )
+  const tr = setTextAlign(state.tr.setSelection(selection), schema, alignment)
   view.dispatch(tr)
 }

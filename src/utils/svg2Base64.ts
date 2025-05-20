@@ -12,12 +12,10 @@ const utf8Encode = (string: string) => {
 
     if (c < 128) {
       utftext += String.fromCharCode(c)
-    }
-    else if (c > 127 && c < 2048) {
+    } else if (c > 127 && c < 2048) {
       utftext += String.fromCharCode((c >> 6) | 192)
       utftext += String.fromCharCode((c & 63) | 128)
-    }
-    else {
+    } else {
       utftext += String.fromCharCode((c >> 12) | 224)
       utftext += String.fromCharCode(((c >> 6) & 63) | 128)
       utftext += String.fromCharCode((c & 63) | 128)
@@ -42,7 +40,12 @@ const encode = (input: string) => {
     enc4 = chr3 & 63
     if (isNaN(chr2)) enc3 = enc4 = 64
     else if (isNaN(chr3)) enc4 = 64
-    output = output + characters.charAt(enc1) + characters.charAt(enc2) + characters.charAt(enc3) + characters.charAt(enc4)
+    output =
+      output +
+      characters.charAt(enc1) +
+      characters.charAt(enc2) +
+      characters.charAt(enc3) +
+      characters.charAt(enc4)
   }
   return output
 }

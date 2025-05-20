@@ -5,7 +5,7 @@ const CTX_CONTEXTMENU_HANDLER = 'CTX_CONTEXTMENU_HANDLER'
 
 interface CustomHTMLElement extends HTMLElement {
   [CTX_CONTEXTMENU_HANDLER]?: (event: MouseEvent) => void
-} 
+}
 
 const contextmenuListener = (el: HTMLElement, event: MouseEvent, binding: DirectiveBinding) => {
   event.stopPropagation()
@@ -23,7 +23,7 @@ const contextmenuListener = (el: HTMLElement, event: MouseEvent, binding: Direct
       container = null
     }
     el.classList.remove('contextmenu-active')
-    document.body.removeEventListener('scroll', removeContextmenu)  
+    document.body.removeEventListener('scroll', removeContextmenu)
     window.removeEventListener('resize', removeContextmenu)
   }
 

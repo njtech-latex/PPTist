@@ -66,4 +66,10 @@ export interface AttributeToken {
   content: string
 }
 
-export type Token = TagStartToken | TagEndToken | TagToken | TextToken | CommentToken | AttributeToken
+export type Token =
+  | TagStartToken
+  | TagEndToken
+  | TagToken
+  | TextToken
+  | CommentToken
+  | AttributeToken

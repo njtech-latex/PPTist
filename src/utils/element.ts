@@ -21,11 +21,11 @@ interface IdMap {
 export const getRectRotatedRange = (element: RotatedElementData) => {
   const { left, top, width, height, rotate = 0 } = element
 
-  const radius = Math.sqrt( Math.pow(width, 2) + Math.pow(height, 2) ) / 2
-  const auxiliaryAngle = Math.atan(height / width) * 180 / Math.PI
+  const radius = Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2)) / 2
+  const auxiliaryAngle = (Math.atan(height / width) * 180) / Math.PI
 
-  const tlbraRadian = (180 - rotate - auxiliaryAngle) * Math.PI / 180
-  const trblaRadian = (auxiliaryAngle - rotate) * Math.PI / 180
+  const tlbraRadian = ((180 - rotate - auxiliaryAngle) * Math.PI) / 180
+  const trblaRadian = ((auxiliaryAngle - rotate) * Math.PI) / 180
 
   const middleLeft = left + width / 2
   const middleTop = top + height / 2
@@ -86,16 +86,14 @@ export const getElementRange = (element: PPTElement) => {
     maxX = element.left + Math.max(element.start[0], element.end[0])
     minY = element.top
     maxY = element.top + Math.max(element.start[1], element.end[1])
-  }
-  else if ('rotate' in element && element.rotate) {
+  } else if ('rotate' in element && element.rotate) {
     const { left, top, width, height, rotate } = element
     const { xRange, yRange } = getRectRotatedRange({ left, top, width, height, rotate })
     minX = xRange[0]
     maxX = xRange[1]
     minY = yRange[0]
     maxY = yRange[1]
-  }
-  else {
+  } else {
     minX = element.left
     maxX = element.left + element.width
     minY = element.top
@@ -114,7 +112,7 @@ export const getElementListRange = (elementList: PPTElement[]) => {
   const rightValues: number[] = []
   const bottomValues: number[] = []
 
-  elementList.forEach(element => {
+  elementList.forEach((element) => {
     const { minX, maxX, minY, maxY } = getElementRange(element)
     leftValues.push(minX)
     topValues.push(minY)
@@ -152,8 +150,8 @@ export interface AlignLine {
  */
 export const uniqAlignLines = (lines: AlignLine[]) => {
   const uniqLines: AlignLine[] = []
-  lines.forEach(line => {
-    const index = uniqLines.findIndex(_line => _line.value === line.value)
+  lines.forEach((line) => {
+    const index = uniqLines.findIndex((_line) => _line.value === line.value)
     if (index === -1) uniqLines.push(line)
     else {
       const uniqLine = uniqLines[index]
@@ -181,11 +179,11 @@ export const createSlideIdMap = (slides: Slide[]) => {
 }
 
 /**
-   * 以元素列表为基础，为每一个元素生成新的ID，并关联到旧ID形成一个字典
-   * 主要用于复制元素时，维持数据中各处元素ID原有的关系
-   * 例如：原本两个组合的元素拥有相同的groupId，复制后依然会拥有另一个相同的groupId
-   * @param elements 元素列表数据
-   */
+ * 以元素列表为基础，为每一个元素生成新的ID，并关联到旧ID形成一个字典
+ * 主要用于复制元素时，维持数据中各处元素ID原有的关系
+ * 例如：原本两个组合的元素拥有相同的groupId，复制后依然会拥有另一个相同的groupId
+ * @param elements 元素列表数据
+ */
 export const createElementIdMap = (elements: PPTElement[]) => {
   const groupIdMap: IdMap = {}
   const elIdMap: IdMap = {}
@@ -208,10 +206,7 @@ export const createElementIdMap = (elements: PPTElement[]) => {
  */
 export const getTableSubThemeColor = (themeColor: string) => {
   const rgba = tinycolor(themeColor)
-  return [
-    rgba.setAlpha(0.3).toRgbString(),
-    rgba.setAlpha(0.1).toRgbString(),
-  ]
+  return [rgba.setAlpha(0.3).toRgbString(), rgba.setAlpha(0.1).toRgbString()]
 }
 
 /**
@@ -224,17 +219,15 @@ export const getLineElementPath = (element: PPTLineElement) => {
   if (element.broken) {
     const mid = element.broken.join(',')
     return `M${start} L${mid} L${end}`
-  }
-  else if (element.broken2) {
+  } else if (element.broken2) {
     const { minX, maxX, minY, maxY } = getElementRange(element)
-    if (maxX - minX >= maxY - minY) return `M${start} L${element.broken2[0]},${element.start[1]} L${element.broken2[0]},${element.end[1]} ${end}`
+    if (maxX - minX >= maxY - minY)
+      return `M${start} L${element.broken2[0]},${element.start[1]} L${element.broken2[0]},${element.end[1]} ${end}`
     return `M${start} L${element.start[0]},${element.broken2[1]} L${element.end[0]},${element.broken2[1]} ${end}`
-  }
-  else if (element.curve) {
+  } else if (element.curve) {
     const mid = element.curve.join(',')
     return `M${start} Q${mid} ${end}`
-  }
-  else if (element.cubic) {
+  } else if (element.cubic) {
     const [c1, c2] = element.cubic
     const p1 = c1.join(',')
     const p2 = c2.join(',')
@@ -252,8 +245,5 @@ export const isElementInViewport = (element: HTMLElement, parent: HTMLElement): 
   const elementRect = element.getBoundingClientRect()
   const parentRect = parent.getBoundingClientRect()
 
-  return (
-    elementRect.top >= parentRect.top &&
-    elementRect.bottom <= parentRect.bottom
-  )
+  return elementRect.top >= parentRect.top && elementRect.bottom <= parentRect.bottom
 }

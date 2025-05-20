@@ -30,7 +30,7 @@ export interface AIPPTContent {
       title: string
       text: string
     }[]
-  },
+  }
   offset?: number
 }
 

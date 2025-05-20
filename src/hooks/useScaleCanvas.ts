@@ -29,7 +29,7 @@ export default () => {
    * @param value 目标画布缩放比例
    */
   const setCanvasScalePercentage = (value: number) => {
-    const percentage = Math.round(value / canvasScale.value * canvasPercentage.value) / 100
+    const percentage = Math.round((value / canvasScale.value) * canvasPercentage.value) / 100
     mainStore.setCanvasPercentage(percentage)
   }
 

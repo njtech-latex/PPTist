@@ -5,17 +5,14 @@ import useHistorySnapshot from '@/hooks/useHistorySnapshot'
 import { SHAPE_PATH_FORMULAS } from '@/configs/shapes'
 
 interface ShapePathData {
-  baseSize: number,
-  originPos: number,
-  min: number,
-  max: number,
-  relative: string,
+  baseSize: number
+  originPos: number
+  min: number
+  max: number
+  relative: string
 }
 
-export default (
-  elementList: Ref<PPTElement[]>,
-  canvasScale: Ref<number>,
-) => {
+export default (elementList: Ref<PPTElement[]>, canvasScale: Ref<number>) => {
   const slidesStore = useSlidesStore()
 
   const { addHistorySnapshot } = useHistorySnapshot()
@@ -25,7 +22,7 @@ export default (
     if (isTouchEvent && (!e.changedTouches || !e.changedTouches[0])) return
 
     let isMouseDown = true
-  
+
     const startPageX = isTouchEvent ? e.changedTouches[0].pageX : e.pageX
     const startPageY = isTouchEvent ? e.changedTouches[0].pageY : e.pageY
 
@@ -54,7 +51,7 @@ export default (
       const moveX = (currentPageX - startPageX) / canvasScale.value
       const moveY = (currentPageY - startPageY) / canvasScale.value
 
-      elementList.value = elementList.value.map(el => {
+      elementList.value = elementList.value.map((el) => {
         if (el.id === element.id && shapePathData) {
           const { baseSize, originPos, min, max, relative } = shapePathData
           const shapeElement = el as PPTShapeElement
@@ -78,8 +75,7 @@ export default (
           if (Array.isArray(originKeypoints)) {
             keypoints = [...originKeypoints]
             keypoints[index] = keypoint
-          }
-          else keypoints = [keypoint]
+          } else keypoints = [keypoint]
 
           return {
             ...el,
@@ -93,7 +89,7 @@ export default (
 
     const handleMouseup = (e: MouseEvent | TouchEvent) => {
       isMouseDown = false
-      
+
       document.ontouchmove = null
       document.ontouchend = null
       document.onmousemove = null
@@ -111,8 +107,7 @@ export default (
     if (isTouchEvent) {
       document.ontouchmove = handleMousemove
       document.ontouchend = handleMouseup
-    }
-    else {
+    } else {
       document.onmousemove = handleMousemove
       document.onmouseup = handleMouseup
     }

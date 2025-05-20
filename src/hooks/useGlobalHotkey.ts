@@ -118,7 +118,9 @@ export default () => {
       mainStore.setActiveElementIdList([firstElement.id])
       return
     }
-    const currentIndex = currentSlide.value.elements.findIndex(el => el.id === handleElementId.value)
+    const currentIndex = currentSlide.value.elements.findIndex(
+      (el) => el.id === handleElementId.value
+    )
     const nextIndex = currentIndex >= currentSlide.value.elements.length - 1 ? 0 : currentIndex + 1
     const nextElementId = currentSlide.value.elements[nextIndex].id
 
@@ -128,14 +130,13 @@ export default () => {
   const keydownListener = (e: KeyboardEvent) => {
     const { ctrlKey, shiftKey, altKey, metaKey } = e
     const ctrlOrMetaKeyActive = ctrlKey || metaKey
-    
+
     const key = e.key.toUpperCase()
 
     if (ctrlOrMetaKeyActive && !ctrlKeyState.value) keyboardStore.setCtrlKeyState(true)
     if (shiftKey && !shiftKeyState.value) keyboardStore.setShiftKeyState(true)
     if (!disableHotkeys.value && key === KEYS.SPACE) keyboardStore.setSpaceKeyState(true)
 
-    
     if (ctrlOrMetaKeyActive && key === KEYS.P) {
       e.preventDefault()
       mainStore.setDialogForExport('pdf')
@@ -172,7 +173,7 @@ export default () => {
       resetCanvas()
       return
     }
-    
+
     if (!editorAreaFocus.value && !thumbnailsFocus.value) return
 
     if (ctrlOrMetaKeyActive && key === KEYS.C) {
@@ -278,29 +279,35 @@ export default () => {
     if (editorAreaFocus.value && !shiftKey && !ctrlOrMetaKeyActive && !disableHotkeys.value) {
       if (key === KEYS.T) {
         mainStore.setCreatingElement({ type: 'text' })
-      }
-      else if (key === KEYS.R) {
-        mainStore.setCreatingElement({ type: 'shape', data: {
-          viewBox: [200, 200],
-          path: 'M 0 0 L 200 0 L 200 200 L 0 200 Z',
-        }})
-      }
-      else if (key === KEYS.O) {
-        mainStore.setCreatingElement({ type: 'shape', data: {
-          viewBox: [200, 200],
-          path: 'M 100 0 A 50 50 0 1 1 100 200 A 50 50 0 1 1 100 0 Z',
-        }})
-      }
-      else if (key === KEYS.L) {
-        mainStore.setCreatingElement({ type: 'line', data: {
-          path: 'M 0 0 L 20 20',
-          style: 'solid',
-          points: ['', ''],
-        }})
+      } else if (key === KEYS.R) {
+        mainStore.setCreatingElement({
+          type: 'shape',
+          data: {
+            viewBox: [200, 200],
+            path: 'M 0 0 L 200 0 L 200 200 L 0 200 Z',
+          },
+        })
+      } else if (key === KEYS.O) {
+        mainStore.setCreatingElement({
+          type: 'shape',
+          data: {
+            viewBox: [200, 200],
+            path: 'M 100 0 A 50 50 0 1 1 100 200 A 50 50 0 1 1 100 0 Z',
+          },
+        })
+      } else if (key === KEYS.L) {
+        mainStore.setCreatingElement({
+          type: 'line',
+          data: {
+            path: 'M 0 0 L 20 20',
+            style: 'solid',
+            points: ['', ''],
+          },
+        })
       }
     }
   }
-  
+
   const keyupListener = () => {
     if (ctrlKeyState.value) keyboardStore.setCtrlKeyState(false)
     if (shiftKeyState.value) keyboardStore.setShiftKeyState(false)

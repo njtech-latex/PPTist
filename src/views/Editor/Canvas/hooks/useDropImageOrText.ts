@@ -23,24 +23,27 @@ export default (elementRef: Ref<HTMLElement | undefined>) => {
       if (item.kind === 'file' && item.type.indexOf('image') !== -1) {
         const imageFile = item.getAsFile()
         if (imageFile) {
-          getImageDataURL(imageFile).then(dataURL => createImageElement(dataURL))
+          getImageDataURL(imageFile).then((dataURL) => createImageElement(dataURL))
         }
         isImage = true
       }
     }
 
     if (isImage) return
-    
+
     if (dataTransferFirstItem.kind === 'string' && dataTransferFirstItem.type === 'text/plain') {
-      dataTransferFirstItem.getAsString(text => {
+      dataTransferFirstItem.getAsString((text) => {
         if (disableHotkeys.value) return
         const string = parseText2Paragraphs(text)
-        createTextElement({
-          left: 0,
-          top: 0,
-          width: 600,
-          height: 50,
-        }, { content: string })
+        createTextElement(
+          {
+            left: 0,
+            top: 0,
+            width: 600,
+            height: 50,
+          },
+          { content: string }
+        )
       })
     }
   }
@@ -48,10 +51,10 @@ export default (elementRef: Ref<HTMLElement | undefined>) => {
   onMounted(() => {
     elementRef.value && elementRef.value.addEventListener('drop', handleDrop)
 
-    document.ondragleave = e => e.preventDefault()
-    document.ondrop = e => e.preventDefault()
-    document.ondragenter = e => e.preventDefault()
-    document.ondragover = e => e.preventDefault()
+    document.ondragleave = (e) => e.preventDefault()
+    document.ondrop = (e) => e.preventDefault()
+    document.ondragenter = (e) => e.preventDefault()
+    document.ondragover = (e) => e.preventDefault()
   })
   onUnmounted(() => {
     elementRef.value && elementRef.value.removeEventListener('drop', handleDrop)

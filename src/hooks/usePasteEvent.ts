@@ -13,7 +13,7 @@ export default () => {
 
   // 粘贴图片到幻灯片元素
   const pasteImageFile = (imageFile: File) => {
-    getImageDataURL(imageFile).then(dataURL => createImageElement(dataURL))
+    getImageDataURL(imageFile).then((dataURL) => createImageElement(dataURL))
   }
 
   /**
@@ -42,10 +42,10 @@ export default () => {
     }
 
     if (isImage) return
-    
+
     // 如果剪贴板内没有图片，但有文字内容，尝试解析文字内容
     if (clipboardDataFirstItem.kind === 'string' && clipboardDataFirstItem.type === 'text/plain') {
-      clipboardDataFirstItem.getAsString(text => pasteTextClipboardData(text))
+      clipboardDataFirstItem.getAsString((text) => pasteTextClipboardData(text))
     }
   }
 

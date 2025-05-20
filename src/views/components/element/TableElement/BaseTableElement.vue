@@ -1,5 +1,5 @@
 <template>
-  <div 
+  <div
     class="base-element-table"
     :style="{
       top: elementInfo.top + 'px',
@@ -7,10 +7,7 @@
       width: elementInfo.width + 'px',
     }"
   >
-    <div
-      class="rotate-wrapper"
-      :style="{ transform: `rotate(${elementInfo.rotate}deg)` }"
-    >
+    <div class="rotate-wrapper" :style="{ transform: `rotate(${elementInfo.rotate}deg)` }">
       <div class="element-content">
         <StaticTable
           :data="elementInfo.data"
@@ -26,26 +23,26 @@
 </template>
 
 <script lang="ts" setup>
-import type { PPTTableElement } from '@/types/slides'
+  import type { PPTTableElement } from '@/types/slides'
 
-import StaticTable from './StaticTable.vue'
+  import StaticTable from './StaticTable.vue'
 
-defineProps<{
-  elementInfo: PPTTableElement
-}>()
+  defineProps<{
+    elementInfo: PPTTableElement
+  }>()
 </script>
 
 <style lang="scss" scoped>
-.base-element-table {
-  position: absolute;
-}
-.rotate-wrapper {
-  width: 100%;
-  height: 100%;
-}
-.element-content {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
+  .base-element-table {
+    position: absolute;
+  }
+  .rotate-wrapper {
+    width: 100%;
+    height: 100%;
+  }
+  .element-content {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
 </style>

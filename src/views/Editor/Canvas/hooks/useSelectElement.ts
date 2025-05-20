@@ -6,10 +6,11 @@ import type { PPTElement } from '@/types/slides'
 
 export default (
   elementList: Ref<PPTElement[]>,
-  moveElement: (e: MouseEvent | TouchEvent, element: PPTElement) => void,
+  moveElement: (e: MouseEvent | TouchEvent, element: PPTElement) => void
 ) => {
   const mainStore = useMainStore()
-  const { activeElementIdList, activeGroupElementId, handleElementId, editorAreaFocus } = storeToRefs(mainStore)
+  const { activeElementIdList, activeGroupElementId, handleElementId, editorAreaFocus } =
+    storeToRefs(mainStore)
   const { ctrlOrShiftKeyActive } = storeToRefs(useKeyboardStore())
 
   // 选中元素
@@ -25,9 +26,8 @@ export default (
 
       if (ctrlOrShiftKeyActive.value) {
         newActiveIdList = [...activeElementIdList.value, element.id]
-      }
-      else newActiveIdList = [element.id]
-      
+      } else newActiveIdList = [element.id]
+
       if (element.groupId) {
         const groupMembersId: string[] = []
         elementList.value.forEach((el: PPTElement) => {
@@ -51,10 +51,9 @@ export default (
         elementList.value.forEach((el: PPTElement) => {
           if (el.groupId === element.groupId) groupMembersId.push(el.id)
         })
-        newActiveIdList = activeElementIdList.value.filter(id => !groupMembersId.includes(id))
-      }
-      else {
-        newActiveIdList = activeElementIdList.value.filter(id => id !== element.id)
+        newActiveIdList = activeElementIdList.value.filter((id) => !groupMembersId.includes(id))
+      } else {
+        newActiveIdList = activeElementIdList.value.filter((id) => id !== element.id)
       }
 
       if (newActiveIdList.length > 0) {

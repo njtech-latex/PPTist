@@ -14,8 +14,7 @@ export default () => {
         slidesLoadLimit.value = slidesLoadLimit.value + 20
         loadSlide()
       }, 600)
-    }
-    else slidesLoadLimit.value = 9999
+    } else slidesLoadLimit.value = 9999
   }
 
   onMounted(loadSlide)

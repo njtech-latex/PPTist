@@ -1,4 +1,12 @@
-import type { Token, HTMLNode, TagToken, NormalElement, TagEndToken, AttributeToken, TextToken } from './types'
+import type {
+  Token,
+  HTMLNode,
+  TagToken,
+  NormalElement,
+  TagEndToken,
+  AttributeToken,
+  TextToken,
+} from './types'
 import { closingTags, closingTagAncestorBreakers, voidTags } from './tags'
 
 interface StackItem {
@@ -42,7 +50,7 @@ export const parse = (state: State) => {
   let { cursor } = state
   let nodes = stack[stack.length - 1].children
   const len = tokens.length
-  
+
   while (cursor < len) {
     const token = tokens[cursor]
     if (token.type !== 'tag-start') {
@@ -70,8 +78,7 @@ export const parse = (state: State) => {
       if (shouldRewind) {
         rewindStack(stack, index)
         break
-      } 
-      else continue
+      } else continue
     }
 
     const isClosingTag = closingTags.includes(tagName)
@@ -119,7 +126,7 @@ export const parse = (state: State) => {
 
     const hasChildren = !(tagEndToken.close || voidTags.includes(tagName))
     if (hasChildren) {
-      stack.push({tagName, children})
+      stack.push({ tagName, children })
       const innerState = { tokens, cursor, stack }
       parse(innerState)
       cursor = innerState.cursor

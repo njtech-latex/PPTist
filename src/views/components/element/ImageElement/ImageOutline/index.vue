@@ -24,18 +24,18 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-import type { PPTImageElement } from '@/types/slides'
-import useClipImage from '../useClipImage'
+  import { computed } from 'vue'
+  import type { PPTImageElement } from '@/types/slides'
+  import useClipImage from '../useClipImage'
 
-import ImageRectOutline from './ImageRectOutline.vue'
-import ImageEllipseOutline from './ImageEllipseOutline.vue'
-import ImagePolygonOutline from './ImagePolygonOutline.vue'
+  import ImageRectOutline from './ImageRectOutline.vue'
+  import ImageEllipseOutline from './ImageEllipseOutline.vue'
+  import ImagePolygonOutline from './ImagePolygonOutline.vue'
 
-const props = defineProps<{
-  elementInfo: PPTImageElement
-}>()
+  const props = defineProps<{
+    elementInfo: PPTImageElement
+  }>()
 
-const imageElement = computed(() => props.elementInfo)
-const { clipShape } = useClipImage(imageElement)
+  const imageElement = computed(() => props.elementInfo)
+  const { clipShape } = useClipImage(imageElement)
 </script>

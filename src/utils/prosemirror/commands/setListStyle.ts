@@ -9,7 +9,7 @@ export const setListStyle = (view: EditorView, style: Style | Style[]) => {
   const { state } = view
   const { schema, selection } = state
   const tr = state.tr.setSelection(selection)
-  
+
   const { doc } = tr
   if (!doc) return tr
 

@@ -56,7 +56,9 @@ export default () => {
   // 水平均匀排列
   const uniformHorizontalDisplay = () => {
     const { minX, maxX } = getElementListRange(activeElementList.value)
-    const copyOfActiveElementList: PPTElement[] = JSON.parse(JSON.stringify(activeElementList.value))
+    const copyOfActiveElementList: PPTElement[] = JSON.parse(
+      JSON.stringify(activeElementList.value)
+    )
     const newElementList: PPTElement[] = JSON.parse(JSON.stringify(currentSlide.value.elements))
 
     // 分别获取普通元素和组合元素集合，并记录下每一项的范围
@@ -66,12 +68,13 @@ export default () => {
       if (!el.groupId) {
         const { minX, maxX } = getElementRange(el)
         singleElemetList.push({ min: minX, max: maxX, el })
-      }
-      else {
-        const groupEl = groupList.find(item => item.groupId === el.groupId)
+      } else {
+        const groupEl = groupList.find((item) => item.groupId === el.groupId)
         if (!groupEl) groupList.push({ groupId: el.groupId, els: [el] })
         else {
-          groupList = groupList.map(item => item.groupId === el.groupId ? { ...item, els: [...item.els, el] } : item)
+          groupList = groupList.map((item) =>
+            item.groupId === el.groupId ? { ...item, els: [...item.els, el] } : item
+          )
         }
       }
     }
@@ -92,7 +95,7 @@ export default () => {
       const width = item.max - item.min
       totalWidth += width
     }
-    const span = ((maxX - minX) - totalWidth) / (list.length - 1)
+    const span = (maxX - minX - totalWidth) / (list.length - 1)
 
     // 按位置顺序依次计算每一个元素的目标位置
     // 第一项中的元素即为起点，无需计算
@@ -105,8 +108,7 @@ export default () => {
 
     if ('el' in firstItem) {
       sortedElementData.push({ pos: firstItem.min, el: firstItem.el })
-    }
-    else {
+    } else {
       for (const el of firstItem.els) {
         const { minX: pos } = getElementRange(el)
         sortedElementData.push({ pos, el })
@@ -122,8 +124,7 @@ export default () => {
 
       if ('el' in item) {
         sortedElementData.push({ pos: currentPos, el: item.el })
-      }
-      else {
+      } else {
         for (const el of item.els) {
           const { minX } = getElementRange(el)
           const offset = minX - item.min
@@ -148,8 +149,7 @@ export default () => {
               rotate: element.rotate,
             })
             element.left = sortedItem.pos - offsetX
-          }
-          else element.left = sortedItem.pos
+          } else element.left = sortedItem.pos
         }
       }
     }
@@ -161,7 +161,9 @@ export default () => {
   // 垂直均匀排列（逻辑类似水平均匀排列方法）
   const uniformVerticalDisplay = () => {
     const { minY, maxY } = getElementListRange(activeElementList.value)
-    const copyOfActiveElementList: PPTElement[] = JSON.parse(JSON.stringify(activeElementList.value))
+    const copyOfActiveElementList: PPTElement[] = JSON.parse(
+      JSON.stringify(activeElementList.value)
+    )
     const newElementList: PPTElement[] = JSON.parse(JSON.stringify(currentSlide.value.elements))
 
     const singleElemetList: ElementItem[] = []
@@ -170,12 +172,13 @@ export default () => {
       if (!el.groupId) {
         const { minY, maxY } = getElementRange(el)
         singleElemetList.push({ min: minY, max: maxY, el })
-      }
-      else {
-        const groupEl = groupList.find(item => item.groupId === el.groupId)
+      } else {
+        const groupEl = groupList.find((item) => item.groupId === el.groupId)
         if (!groupEl) groupList.push({ groupId: el.groupId, els: [el] })
         else {
-          groupList = groupList.map(item => item.groupId === el.groupId ? { ...item, els: [...item.els, el] } : item)
+          groupList = groupList.map((item) =>
+            item.groupId === el.groupId ? { ...item, els: [...item.els, el] } : item
+          )
         }
       }
     }
@@ -193,7 +196,7 @@ export default () => {
       const height = item.max - item.min
       totalHeight += height
     }
-    const span = ((maxY - minY) - totalHeight) / (list.length - 1)
+    const span = (maxY - minY - totalHeight) / (list.length - 1)
 
     const sortedElementData: ElementWithPos[] = []
 
@@ -202,8 +205,7 @@ export default () => {
 
     if ('el' in firstItem) {
       sortedElementData.push({ pos: firstItem.min, el: firstItem.el })
-    }
-    else {
+    } else {
       for (const el of firstItem.els) {
         const { minY: pos } = getElementRange(el)
         sortedElementData.push({ pos, el })
@@ -219,8 +221,7 @@ export default () => {
 
       if ('el' in item) {
         sortedElementData.push({ pos: currentPos, el: item.el })
-      }
-      else {
+      } else {
         for (const el of item.els) {
           const { minY } = getElementRange(el)
           const offset = minY - item.min
@@ -243,8 +244,7 @@ export default () => {
               rotate: element.rotate,
             })
             element.top = sortedItem.pos - offsetY
-          }
-          else element.top = sortedItem.pos
+          } else element.top = sortedItem.pos
         }
       }
     }

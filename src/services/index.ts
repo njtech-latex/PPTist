@@ -12,11 +12,7 @@ export default {
     return axios.get(`${ASSET_URL}/data/${filename}.json`)
   },
 
-  AIPPT_Outline(
-    content: string,
-    language: string,
-    model: string,
-  ): Promise<any> {
+  AIPPT_Outline(content: string, language: string, model: string): Promise<any> {
     return fetch(url('/ppt/outline'), {
       method: 'POST',
       headers: {
@@ -31,11 +27,7 @@ export default {
     })
   },
 
-  AIPPT(
-    content: string,
-    language: string,
-    model: string,
-  ): Promise<any> {
+  AIPPT(content: string, language: string, model: string): Promise<any> {
     return fetch(url('/ppt/slides'), {
       method: 'POST',
       headers: {

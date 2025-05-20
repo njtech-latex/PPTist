@@ -4,7 +4,7 @@ import message from '@/utils/message'
 const instance = axios.create({ timeout: 1000 * 300 })
 
 instance.interceptors.response.use(
-  response => {
+  (response) => {
     if (response.status >= 200 && response.status < 400) {
       return Promise.resolve(response.data)
     }
@@ -12,15 +12,14 @@ instance.interceptors.response.use(
     message.error('未知的请求错误！')
     return Promise.reject(response)
   },
-  error => {
+  (error) => {
     if (error && error.response) {
       if (error.response.status >= 400 && error.response.status < 500) {
         return Promise.reject(error.message)
-      }
-      else if (error.response.status >= 500) {
+      } else if (error.response.status >= 500) {
         return Promise.reject(error.message)
       }
-      
+
       message.error('服务器遇到未知错误！')
       return Promise.reject(error.message)
     }

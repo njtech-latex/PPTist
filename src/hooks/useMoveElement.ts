@@ -23,30 +23,30 @@ export default () => {
     const move = (el: PPTElement) => {
       let { left, top } = el
       switch (command) {
-        case KEYS.LEFT: 
+        case KEYS.LEFT:
           left = left - step
           break
-        case KEYS.RIGHT: 
+        case KEYS.RIGHT:
           left = left + step
           break
-        case KEYS.UP: 
+        case KEYS.UP:
           top = top - step
           break
-        case KEYS.DOWN: 
+        case KEYS.DOWN:
           top = top + step
           break
-        default: break
+        default:
+          break
       }
       return { ...el, left, top }
     }
 
     if (activeGroupElementId.value) {
-      newElementList = currentSlide.value.elements.map(el => {
+      newElementList = currentSlide.value.elements.map((el) => {
         return activeGroupElementId.value === el.id ? move(el) : el
       })
-    }
-    else {
-      newElementList = currentSlide.value.elements.map(el => {
+    } else {
+      newElementList = currentSlide.value.elements.map((el) => {
         return activeElementIdList.value.includes(el.id) ? move(el) : el
       })
     }

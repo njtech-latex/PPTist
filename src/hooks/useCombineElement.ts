@@ -22,7 +22,9 @@ export default () => {
     const firstGroupId = activeElementList.value[0].groupId
     if (!firstGroupId) return true
 
-    const inSameGroup = activeElementList.value.every(el => (el.groupId && el.groupId) === firstGroupId)
+    const inSameGroup = activeElementList.value.every(
+      (el) => (el.groupId && el.groupId) === firstGroupId
+    )
     return !inSameGroup
   })
 
@@ -50,9 +52,13 @@ export default () => {
     // 确保该组合内所有元素成员的层级是连续的，具体操作方法为：
     // 先获取到该组合内最上层元素的层级，将本次需要组合的元素从新元素列表中移除，
     // 再根据最上层元素的层级位置，将上面收集到的需要组合的元素列表一起插入到新元素列表中合适的位置
-    const combineElementMaxLevel = newElementList.findIndex(_element => _element.id === combineElementList[combineElementList.length - 1].id)
-    const combineElementIdList = combineElementList.map(_element => _element.id)
-    newElementList = newElementList.filter(_element => !combineElementIdList.includes(_element.id))
+    const combineElementMaxLevel = newElementList.findIndex(
+      (_element) => _element.id === combineElementList[combineElementList.length - 1].id
+    )
+    const combineElementIdList = combineElementList.map((_element) => _element.id)
+    newElementList = newElementList.filter(
+      (_element) => !combineElementIdList.includes(_element.id)
+    )
 
     const insertLevel = combineElementMaxLevel - combineElementList.length + 1
     newElementList.splice(insertLevel, 0, ...combineElementList)
@@ -66,9 +72,9 @@ export default () => {
    */
   const uncombineElements = () => {
     if (!activeElementList.value.length) return
-    const hasElementInGroup = activeElementList.value.some(item => item.groupId)
+    const hasElementInGroup = activeElementList.value.some((item) => item.groupId)
     if (!hasElementInGroup) return
-    
+
     const newElementList: PPTElement[] = JSON.parse(JSON.stringify(currentSlide.value.elements))
     for (const element of newElementList) {
       if (activeElementIdList.value.includes(element.id) && element.groupId) delete element.groupId

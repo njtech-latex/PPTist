@@ -22,7 +22,7 @@ type Events = {
   [EmitterEvents.SYNC_RICH_TEXT_ATTRS_TO_STORE]: void
   [EmitterEvents.OPEN_CHART_DATA_EDITOR]: void
   [EmitterEvents.OPEN_LATEX_EDITOR]: void
-} 
+}
 
 const emitter: Emitter<Events> = mitt<Events>()
 

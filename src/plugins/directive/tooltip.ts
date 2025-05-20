@@ -25,8 +25,7 @@ const TooltipDirective: Directive = {
 
     if (typeof binding.value === 'string') {
       content = binding.value
-    }
-    else {
+    } else {
       content = binding.value.content
       if (binding.value.placement !== undefined) placement = binding.value.placement
       if (binding.value.delay !== undefined) delay = binding.value.delay
@@ -47,13 +46,12 @@ const TooltipDirective: Directive = {
     let content = ''
     if (typeof binding.value === 'string') {
       content = binding.value
-    }
-    else {
+    } else {
       content = binding.value.content
     }
     if (el[TOOLTIP_INSTANCE]) el[TOOLTIP_INSTANCE].setContent(content)
   },
-  
+
   unmounted(el: CustomHTMLElement) {
     if (el[TOOLTIP_INSTANCE]) el[TOOLTIP_INSTANCE].destroy()
   },

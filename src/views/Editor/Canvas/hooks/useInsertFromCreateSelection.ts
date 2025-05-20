@@ -49,14 +49,8 @@ export default (viewportRef: Ref<HTMLElement | undefined>) => {
     const width = (maxX - minX) / canvasScale.value
     const height = (maxY - minY) / canvasScale.value
 
-    const _start: [number, number] = [
-      startX === minX ? 0 : width,
-      startY === minY ? 0 : height,
-    ]
-    const _end: [number, number] = [
-      endX === minX ? 0 : width,
-      endY === minY ? 0 : height,
-    ]
+    const _start: [number, number] = [startX === minX ? 0 : width, startY === minY ? 0 : height]
+    const _end: [number, number] = [endX === minX ? 0 : width, endY === minY ? 0 : height]
 
     return {
       left,
@@ -76,12 +70,10 @@ export default (viewportRef: Ref<HTMLElement | undefined>) => {
     if (type === 'text') {
       const position = formatCreateSelection(selectionData)
       position && createTextElement(position, { vertical: creatingElement.value.vertical })
-    }
-    else if (type === 'shape') {
+    } else if (type === 'shape') {
       const position = formatCreateSelection(selectionData)
       position && createShapeElement(position, creatingElement.value.data)
-    }
-    else if (type === 'line') {
+    } else if (type === 'line') {
       const position = formatCreateSelectionForLine(selectionData)
       position && createLineElement(position, creatingElement.value.data)
     }

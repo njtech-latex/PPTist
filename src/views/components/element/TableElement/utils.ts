@@ -7,21 +7,11 @@ import type { TableCellStyle } from '@/types/slides'
  */
 export const getTextStyle = (style?: TableCellStyle): CSSProperties => {
   if (!style) return {}
-  const {
-    bold,
-    em,
-    underline,
-    strikethrough,
-    color,
-    backcolor,
-    fontsize,
-    fontname,
-    align,
-  } = style
+  const { bold, em, underline, strikethrough, color, backcolor, fontsize, fontname, align } = style
 
   let textDecoration = `${underline ? 'underline' : ''} ${strikethrough ? 'line-through' : ''}`
   if (textDecoration === ' ') textDecoration = 'none'
-  
+
   return {
     fontWeight: bold ? 'bold' : 'normal',
     fontStyle: em ? 'italic' : 'normal',

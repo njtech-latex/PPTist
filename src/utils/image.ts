@@ -8,7 +8,7 @@ interface ImageSize {
  * @param src 图片地址
  */
 export const getImageSize = (src: string): Promise<ImageSize> => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const img = document.createElement('img')
     img.src = src
     img.style.opacity = '0'
@@ -17,7 +17,7 @@ export const getImageSize = (src: string): Promise<ImageSize> => {
     img.onload = () => {
       const imgWidth = img.clientWidth
       const imgHeight = img.clientHeight
-    
+
       img.onload = null
       img.onerror = null
 
@@ -38,7 +38,7 @@ export const getImageSize = (src: string): Promise<ImageSize> => {
  * @param file 图片文件
  */
 export const getImageDataURL = (file: File): Promise<string> => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const reader = new FileReader()
     reader.addEventListener('load', () => {
       resolve(reader.result as string)
@@ -59,8 +59,7 @@ export const isSVGString = (text: string): boolean => {
     const parser = new DOMParser()
     const doc = parser.parseFromString(text, 'image/svg+xml')
     return doc.documentElement.nodeName === 'svg'
-  } 
-  catch {
+  } catch {
     return false
   }
 }

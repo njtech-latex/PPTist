@@ -5,7 +5,7 @@ import type { PPTImageElement } from '@/types/slides'
 export default (element: Ref<PPTImageElement>) => {
   const clipShape = computed(() => {
     let _clipShape = CLIPPATHS.rect
-    
+
     if (element.value.clip) {
       const shape = element.value.clip.shape || ClipPathTypes.RECT
       _clipShape = CLIPPATHS[shape]

@@ -34,20 +34,23 @@ export default () => {
 
     // 依次执行该位置中的全部动画
     for (const animation of animations) {
-      const elRef: HTMLElement | null = document.querySelector(`#screen-element-${animation.elId} [class^=base-element-]`)
+      const elRef: HTMLElement | null = document.querySelector(
+        `#screen-element-${animation.elId} [class^=base-element-]`
+      )
       if (!elRef) {
         endAnimationCount += 1
         continue
       }
 
       const animationName = `${ANIMATION_CLASS_PREFIX}${animation.effect}`
-      
+
       // 执行动画前先清除原有的动画状态（如果有）
       elRef.style.removeProperty('--animate-duration')
       for (const classname of elRef.classList) {
-        if (classname.indexOf(ANIMATION_CLASS_PREFIX) !== -1) elRef.classList.remove(classname, `${ANIMATION_CLASS_PREFIX}animated`)
+        if (classname.indexOf(ANIMATION_CLASS_PREFIX) !== -1)
+          elRef.classList.remove(classname, `${ANIMATION_CLASS_PREFIX}animated`)
       }
-      
+
       // 执行动画
       elRef.style.setProperty('--animate-duration', `${animation.duration}ms`)
       elRef.classList.add(animationName, `${ANIMATION_CLASS_PREFIX}animated`)
@@ -73,7 +76,9 @@ export default () => {
   onMounted(() => {
     const firstAnimations = formatedAnimations.value[0]
     if (firstAnimations && firstAnimations.animations.length) {
-      const autoExecFirstAnimations = firstAnimations.animations.every(item => item.trigger === 'auto' || item.trigger === 'meantime')
+      const autoExecFirstAnimations = firstAnimations.animations.every(
+        (item) => item.trigger === 'auto' || item.trigger === 'meantime'
+      )
       if (autoExecFirstAnimations) runAnimation()
     }
   })
@@ -84,17 +89,20 @@ export default () => {
     const { animations } = formatedAnimations.value[animationIndex.value]
 
     for (const animation of animations) {
-      const elRef: HTMLElement | null = document.querySelector(`#screen-element-${animation.elId} [class^=base-element-]`)
+      const elRef: HTMLElement | null = document.querySelector(
+        `#screen-element-${animation.elId} [class^=base-element-]`
+      )
       if (!elRef) continue
-      
+
       elRef.style.removeProperty('--animate-duration')
       for (const classname of elRef.classList) {
-        if (classname.indexOf(ANIMATION_CLASS_PREFIX) !== -1) elRef.classList.remove(classname, `${ANIMATION_CLASS_PREFIX}animated`)
+        if (classname.indexOf(ANIMATION_CLASS_PREFIX) !== -1)
+          elRef.classList.remove(classname, `${ANIMATION_CLASS_PREFIX}animated`)
       }
     }
 
     // 如果撤销时该位置有且仅有强调动画，则继续执行一次撤销
-    if (animations.every(item => item.type === 'attention')) execPrev()
+    if (animations.every((item) => item.type === 'attention')) execPrev()
   }
 
   // 关闭自动播放
@@ -113,9 +121,13 @@ export default () => {
     loopPlay.value = loop
   }
 
-  const throttleMassage = throttle(function(msg) {
-    message.success(msg)
-  }, 1000, { leading: true, trailing: false })
+  const throttleMassage = throttle(
+    function (msg) {
+      message.success(msg)
+    },
+    1000,
+    { leading: true, trailing: false }
+  )
 
   // 向上/向下播放
   // 遇到元素动画时，优先执行动画播放，无动画则执行翻页
@@ -124,16 +136,13 @@ export default () => {
   const execPrev = () => {
     if (formatedAnimations.value.length && animationIndex.value > 0) {
       revokeAnimation()
-    }
-    else if (slideIndex.value > 0) {
+    } else if (slideIndex.value > 0) {
       slidesStore.updateSlideIndex(slideIndex.value - 1)
       if (slideIndex.value < playedSlidesMinIndex.value) {
         animationIndex.value = 0
         playedSlidesMinIndex.value = slideIndex.value
-      }
-      else animationIndex.value = formatedAnimations.value.length
-    }
-    else {
+      } else animationIndex.value = formatedAnimations.value.length
+    } else {
       if (loopPlay.value) turnSlideToIndex(slides.value.length - 1)
       else throttleMassage('已经是第一页了')
     }
@@ -142,13 +151,11 @@ export default () => {
   const execNext = () => {
     if (formatedAnimations.value.length && animationIndex.value < formatedAnimations.value.length) {
       runAnimation()
-    }
-    else if (slideIndex.value < slides.value.length - 1) {
+    } else if (slideIndex.value < slides.value.length - 1) {
       slidesStore.updateSlideIndex(slideIndex.value + 1)
       animationIndex.value = 0
       inAnimation.value = false
-    }
-    else {
+    } else {
       if (loopPlay.value) turnSlideToIndex(0)
       else {
         throttleMassage('已经是最后一页了')
@@ -173,13 +180,17 @@ export default () => {
   }
 
   // 鼠标滚动翻页
-  const mousewheelListener = throttle(function(e: WheelEvent) {
-    if (e.deltaY < 0) execPrev()
-    else if (e.deltaY > 0) execNext()
-  }, 500, { leading: true, trailing: false })
+  const mousewheelListener = throttle(
+    function (e: WheelEvent) {
+      if (e.deltaY < 0) execPrev()
+      else if (e.deltaY > 0) execNext()
+    },
+    500,
+    { leading: true, trailing: false }
+  )
 
   // 触摸屏上下滑动翻页
-  const touchInfo = ref<{ x: number; y: number; } | null>(null)
+  const touchInfo = ref<{ x: number; y: number } | null>(null)
 
   const touchStartListener = (e: TouchEvent) => {
     touchInfo.value = {
@@ -193,7 +204,7 @@ export default () => {
     const offsetX = Math.abs(touchInfo.value.x - e.changedTouches[0].pageX)
     const offsetY = e.changedTouches[0].pageY - touchInfo.value.y
 
-    if ( Math.abs(offsetY) > offsetX && Math.abs(offsetY) > 50 ) {
+    if (Math.abs(offsetY) > offsetX && Math.abs(offsetY) > 50) {
       touchInfo.value = null
 
       if (offsetY > 0) execPrev()
@@ -207,12 +218,13 @@ export default () => {
 
     if (key === KEYS.UP || key === KEYS.LEFT || key === KEYS.PAGEUP) execPrev()
     else if (
-      key === KEYS.DOWN || 
+      key === KEYS.DOWN ||
       key === KEYS.RIGHT ||
-      key === KEYS.SPACE || 
+      key === KEYS.SPACE ||
       key === KEYS.ENTER ||
       key === KEYS.PAGEDOWN
-    ) execNext()
+    )
+      execNext()
   }
 
   onMounted(() => document.addEventListener('keydown', keydownListener))
@@ -234,7 +246,7 @@ export default () => {
     animationIndex.value = 0
   }
   const turnSlideToId = (id: string) => {
-    const index = slides.value.findIndex(slide => slide.id === id)
+    const index = slides.value.findIndex((slide) => slide.id === id)
     if (index !== -1) {
       slidesStore.updateSlideIndex(index)
       animationIndex.value = 0

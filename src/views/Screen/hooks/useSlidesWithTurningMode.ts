@@ -7,11 +7,13 @@ export default () => {
   const { slides } = storeToRefs(useSlidesStore())
 
   const slidesWithTurningMode = computed(() => {
-    return slides.value.map(slide => {
+    return slides.value.map((slide) => {
       let turningMode = slide.turningMode
       if (!turningMode) turningMode = 'slideY'
       if (turningMode === 'random') {
-        const turningModeKeys = SLIDE_ANIMATIONS.filter(item => !['random', 'no'].includes(item.value)).map(item => item.value)
+        const turningModeKeys = SLIDE_ANIMATIONS.filter(
+          (item) => !['random', 'no'].includes(item.value)
+        ).map((item) => item.value)
         turningMode = turningModeKeys[Math.floor(Math.random() * turningModeKeys.length)]
       }
       return {

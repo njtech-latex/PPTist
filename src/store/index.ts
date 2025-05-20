@@ -4,10 +4,4 @@ import { useSnapshotStore } from './snapshot'
 import { useKeyboardStore } from './keyboard'
 import { useScreenStore } from './screen'
 
-export {
-  useMainStore,
-  useSlidesStore,
-  useSnapshotStore,
-  useKeyboardStore,
-  useScreenStore,
-}
+export { useMainStore, useSlidesStore, useSnapshotStore, useKeyboardStore, useScreenStore }

@@ -4,10 +4,7 @@ import type { EditorView } from 'prosemirror-view'
 import { selectAll } from 'prosemirror-commands'
 
 export const isList = (node: Node, schema: Schema) => {
-  return (
-    node.type === schema.nodes.bullet_list ||
-    node.type === schema.nodes.ordered_list
-  )
+  return node.type === schema.nodes.bullet_list || node.type === schema.nodes.ordered_list
 }
 
 export const autoSelectAll = (view: EditorView) => {
@@ -15,11 +12,14 @@ export const autoSelectAll = (view: EditorView) => {
   if (empty) selectAll(view.state, view.dispatch)
 }
 
-export const addMark = (editorView: EditorView, mark: Mark, selection?: { from: number; to: number; }) => {
+export const addMark = (
+  editorView: EditorView,
+  mark: Mark,
+  selection?: { from: number; to: number }
+) => {
   if (selection) {
     editorView.dispatch(editorView.state.tr.addMark(selection.from, selection.to, mark))
-  }
-  else {
+  } else {
     const { $from, $to } = editorView.state.selection
     editorView.dispatch(editorView.state.tr.addMark($from.pos, $to.pos, mark))
   }
@@ -86,7 +86,7 @@ export const findNodesWithSameMark = (doc: Node, from: number, to: number, markT
 }
 
 const equalNodeType = (nodeType: NodeType, node: Node) => {
-  return Array.isArray(nodeType) && nodeType.indexOf(node.type) > -1 || node.type === nodeType
+  return (Array.isArray(nodeType) && nodeType.indexOf(node.type) > -1) || node.type === nodeType
 }
 
 const findParentNodeClosestToPos = ($pos: ResolvedPos, predicate: (node: Node) => boolean) => {
@@ -138,7 +138,11 @@ export const getMarkAttrs = (view: EditorView) => {
   return node?.marks || []
 }
 
-export const getAttrValue = (marks: readonly Mark[], markType: string, attr: string): string | null => {
+export const getAttrValue = (
+  marks: readonly Mark[],
+  markType: string,
+  attr: string
+): string | null => {
   for (const mark of marks) {
     if (mark.type.name === markType && mark.attrs[attr]) return mark.attrs[attr]
   }
@@ -164,7 +168,7 @@ export const getAttrValueInSelection = (view: EditorView, attr: string) => {
 
   let keepChecking = true
   let value = ''
-  doc.nodesBetween(from, to, node => {
+  doc.nodesBetween(from, to, (node) => {
     if (keepChecking && node.attrs[attr]) {
       keepChecking = false
       value = node.attrs[attr]

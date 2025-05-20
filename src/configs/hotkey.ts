@@ -36,7 +36,7 @@ interface HotkeyItem {
   children: {
     label: string
     value?: string
-  }[] 
+  }[]
 }
 
 export const HOTKEY_DOC: HotkeyItem[] = [
@@ -118,9 +118,7 @@ export const HOTKEY_DOC: HotkeyItem[] = [
   },
   {
     type: '图表数据编辑',
-    children: [
-      { label: '聚焦到下一行', value: 'Enter' },
-    ],
+    children: [{ label: '聚焦到下一行', value: 'Enter' }],
   },
   {
     type: '文本编辑',

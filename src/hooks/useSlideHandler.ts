@@ -19,8 +19,10 @@ export default () => {
   const { currentSlide, slides, theme, slideIndex } = storeToRefs(slidesStore)
 
   const selectedSlidesIndex = computed(() => [..._selectedSlidesIndex.value, slideIndex.value])
-  const selectedSlides = computed(() => slides.value.filter((item, index) => selectedSlidesIndex.value.includes(index)))
-  const selectedSlidesId = computed(() => selectedSlides.value.map(item => item.id))
+  const selectedSlides = computed(() =>
+    slides.value.filter((item, index) => selectedSlidesIndex.value.includes(index))
+  )
+  const selectedSlidesId = computed(() => selectedSlides.value.map((item) => item.id))
 
   const { pasteTextClipboardData } = usePasteTextClipboardData()
   const { addSlidesFromData } = useAddSlidesOrElements()
@@ -49,8 +51,7 @@ export default () => {
     if (command === KEYS.UP && slideIndex.value > 0) {
       if (activeElementIdList.value.length) mainStore.setActiveElementIdList([])
       slidesStore.updateSlideIndex(slideIndex.value - 1)
-    }
-    else if (command === KEYS.DOWN && slideIndex.value < slides.value.length - 1) {
+    } else if (command === KEYS.DOWN && slideIndex.value < slides.value.length - 1) {
       if (activeElementIdList.value.length) mainStore.setActiveElementIdList([])
       slidesStore.updateSlideIndex(slideIndex.value + 1)
     }
@@ -58,10 +59,12 @@ export default () => {
 
   // 将当前页面数据加密后复制到剪贴板
   const copySlide = () => {
-    const text = encrypt(JSON.stringify({
-      type: 'slides',
-      data: selectedSlides.value,
-    }))
+    const text = encrypt(
+      JSON.stringify({
+        type: 'slides',
+        data: selectedSlides.value,
+      })
+    )
 
     copyText(text).then(() => {
       mainStore.setThumbnailsFocus(true)
@@ -70,9 +73,11 @@ export default () => {
 
   // 尝试将剪贴板页面数据解密后添加到下一页（粘贴）
   const pasteSlide = () => {
-    readClipboard().then(text => {
-      pasteTextClipboardData(text, { onlySlide: true })
-    }).catch(err => message.warning(err))
+    readClipboard()
+      .then((text) => {
+        pasteTextClipboardData(text, { onlySlide: true })
+      })
+      .catch((err) => message.warning(err))
   }
 
   // 创建一页空白页并添加到下一页
@@ -141,7 +146,7 @@ export default () => {
   // 拖拽调整幻灯片顺序同步数据
   const sortSlides = (newIndex: number, oldIndex: number) => {
     if (oldIndex === newIndex) return
-  
+
     const _slides: Slide[] = JSON.parse(JSON.stringify(slides.value))
 
     const movingSlide = _slides[oldIndex]

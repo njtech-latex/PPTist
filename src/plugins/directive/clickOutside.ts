@@ -4,7 +4,7 @@ const CTX_CLICK_OUTSIDE_HANDLER = 'CTX_CLICK_OUTSIDE_HANDLER'
 
 interface CustomHTMLElement extends HTMLElement {
   [CTX_CLICK_OUTSIDE_HANDLER]?: (event: MouseEvent) => void
-} 
+}
 
 const clickListener = (el: HTMLElement, event: MouseEvent, binding: DirectiveBinding) => {
   const handler = binding.value
@@ -23,7 +23,7 @@ const ClickOutsideDirective: Directive = {
       document.addEventListener('click', el[CTX_CLICK_OUTSIDE_HANDLER]!)
     }, 0)
   },
-  
+
   unmounted(el: CustomHTMLElement) {
     if (el[CTX_CLICK_OUTSIDE_HANDLER]) {
       document.removeEventListener('click', el[CTX_CLICK_OUTSIDE_HANDLER])

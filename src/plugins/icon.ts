@@ -266,5 +266,5 @@ export default {
     for (const key of Object.keys(icons)) {
       app.component(key, icons[key])
     }
-  }
+  },
 }

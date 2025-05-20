@@ -8,7 +8,9 @@ import type {
 } from 'echarts/charts'
 import type { ChartData, ChartType } from '@/types/slides'
 
-type EChartOption = ComposeOption<BarSeriesOption | LineSeriesOption | PieSeriesOption | ScatterSeriesOption | RadarSeriesOption>
+type EChartOption = ComposeOption<
+  BarSeriesOption | LineSeriesOption | PieSeriesOption | ScatterSeriesOption | RadarSeriesOption
+>
 
 export interface ChartOptionPayload {
   type: ChartType
@@ -30,15 +32,22 @@ export const getChartOption = ({
   if (type === 'bar') {
     return {
       color: themeColors,
-      textStyle: textColor ? {
-        color: textColor,
-      } : {},
-      legend: data.series.length > 1 ? {
-        top: 'bottom',
-        textStyle: textColor ? {
-          color: textColor,
-        } : {},
-      } : undefined,
+      textStyle: textColor
+        ? {
+            color: textColor,
+          }
+        : {},
+      legend:
+        data.series.length > 1
+          ? {
+              top: 'bottom',
+              textStyle: textColor
+                ? {
+                    color: textColor,
+                  }
+                : {},
+            }
+          : undefined,
       xAxis: {
         type: 'category',
         data: data.labels,
@@ -63,15 +72,22 @@ export const getChartOption = ({
   if (type === 'column') {
     return {
       color: themeColors,
-      textStyle: textColor ? {
-        color: textColor,
-      } : {},
-      legend: data.series.length > 1 ? {
-        top: 'bottom',
-        textStyle: textColor ? {
-          color: textColor,
-        } : {},
-      } : undefined,
+      textStyle: textColor
+        ? {
+            color: textColor,
+          }
+        : {},
+      legend:
+        data.series.length > 1
+          ? {
+              top: 'bottom',
+              textStyle: textColor
+                ? {
+                    color: textColor,
+                  }
+                : {},
+            }
+          : undefined,
       yAxis: {
         type: 'category',
         data: data.labels,
@@ -96,15 +112,22 @@ export const getChartOption = ({
   if (type === 'line') {
     return {
       color: themeColors,
-      textStyle: textColor ? {
-        color: textColor,
-      } : {},
-      legend: data.series.length > 1 ? {
-        top: 'bottom',
-        textStyle: textColor ? {
-          color: textColor,
-        } : {},
-      } : undefined,
+      textStyle: textColor
+        ? {
+            color: textColor,
+          }
+        : {},
+      legend:
+        data.series.length > 1
+          ? {
+              top: 'bottom',
+              textStyle: textColor
+                ? {
+                    color: textColor,
+                  }
+                : {},
+            }
+          : undefined,
       xAxis: {
         type: 'category',
         data: data.labels,
@@ -130,21 +153,27 @@ export const getChartOption = ({
   if (type === 'pie') {
     return {
       color: themeColors,
-      textStyle: textColor ? {
-        color: textColor,
-      } : {},
+      textStyle: textColor
+        ? {
+            color: textColor,
+          }
+        : {},
       legend: {
         top: 'bottom',
-        textStyle: textColor ? {
-          color: textColor,
-        } : {},
+        textStyle: textColor
+          ? {
+              color: textColor,
+            }
+          : {},
       },
       series: [
         {
           data: data.series[0].map((item, index) => ({ value: item, name: data.labels[index] })),
-          label: textColor ? {
-            color: textColor,
-          } : {},
+          label: textColor
+            ? {
+                color: textColor,
+              }
+            : {},
           type: 'pie',
           radius: '70%',
           emphasis: {
@@ -156,31 +185,37 @@ export const getChartOption = ({
             label: {
               show: true,
               fontSize: 14,
-              fontWeight: 'bold'
+              fontWeight: 'bold',
             },
           },
-        }
+        },
       ],
     }
   }
   if (type === 'ring') {
     return {
       color: themeColors,
-      textStyle: textColor ? {
-        color: textColor,
-      } : {},
+      textStyle: textColor
+        ? {
+            color: textColor,
+          }
+        : {},
       legend: {
         top: 'bottom',
-        textStyle: textColor ? {
-          color: textColor,
-        } : {},
+        textStyle: textColor
+          ? {
+              color: textColor,
+            }
+          : {},
       },
       series: [
         {
           data: data.series[0].map((item, index) => ({ value: item, name: data.labels[index] })),
-          label: textColor ? {
-            color: textColor,
-          } : {},
+          label: textColor
+            ? {
+                color: textColor,
+              }
+            : {},
           type: 'pie',
           radius: ['40%', '70%'],
           padAngle: 1,
@@ -192,25 +227,32 @@ export const getChartOption = ({
             label: {
               show: true,
               fontSize: 14,
-              fontWeight: 'bold'
+              fontWeight: 'bold',
             },
           },
-        }
+        },
       ],
     }
   }
   if (type === 'area') {
     return {
       color: themeColors,
-      textStyle: textColor ? {
-        color: textColor,
-      } : {},
-      legend: data.series.length > 1 ? {
-        top: 'bottom',
-        textStyle: textColor ? {
-          color: textColor,
-        } : {},
-      } : undefined,
+      textStyle: textColor
+        ? {
+            color: textColor,
+          }
+        : {},
+      legend:
+        data.series.length > 1
+          ? {
+              top: 'bottom',
+              textStyle: textColor
+                ? {
+                    color: textColor,
+                  }
+                : {},
+            }
+          : undefined,
       xAxis: {
         type: 'category',
         boundaryGap: false,
@@ -244,17 +286,24 @@ export const getChartOption = ({
 
     return {
       color: themeColors,
-      textStyle: textColor ? {
-        color: textColor,
-      } : {},
-      legend: data.series.length > 1 ? {
-        top: 'bottom',
-        textStyle: textColor ? {
-          color: textColor,
-        } : {},
-      } : undefined,
+      textStyle: textColor
+        ? {
+            color: textColor,
+          }
+        : {},
+      legend:
+        data.series.length > 1
+          ? {
+              top: 'bottom',
+              textStyle: textColor
+                ? {
+                    color: textColor,
+                  }
+                : {},
+            }
+          : undefined,
       radar: {
-        indicator: data.labels.map(item => ({ name: item })),
+        indicator: data.labels.map((item) => ({ name: item })),
       },
       series: [
         {
@@ -274,9 +323,11 @@ export const getChartOption = ({
 
     return {
       color: themeColors,
-      textStyle: textColor ? {
-        color: textColor,
-      } : {},
+      textStyle: textColor
+        ? {
+            color: textColor,
+          }
+        : {},
       xAxis: {},
       yAxis: {},
       series: [
@@ -284,7 +335,7 @@ export const getChartOption = ({
           symbolSize: 12,
           data: formatedData,
           type: 'scatter',
-        }
+        },
       ],
     }
   }

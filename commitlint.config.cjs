@@ -10,7 +10,6 @@
  * style 代码格式修改
  * test 测试用例修改
  */
-/* eslint-env node */
 module.exports = {
   extends: ['@commitlint/config-conventional'],
 }

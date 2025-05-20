@@ -18,51 +18,60 @@
 </template>
 
 <script lang="ts" setup>
-import type { ChartType } from '@/types/slides'
-import { CHART_TYPE_MAP } from '@/configs/chart'
+  import type { ChartType } from '@/types/slides'
+  import { CHART_TYPE_MAP } from '@/configs/chart'
 
-const emit = defineEmits<{
-  (event: 'select', payload: ChartType): void
-}>()
+  const emit = defineEmits<{
+    (event: 'select', payload: ChartType): void
+  }>()
 
-const chartList: ChartType[] = ['bar', 'column', 'line', 'area', 'scatter', 'pie', 'ring', 'radar']
+  const chartList: ChartType[] = [
+    'bar',
+    'column',
+    'line',
+    'area',
+    'scatter',
+    'pie',
+    'ring',
+    'radar',
+  ]
 
-const selectChart = (chart: ChartType) => {
-  emit('select', chart)
-}
+  const selectChart = (chart: ChartType) => {
+    emit('select', chart)
+  }
 </script>
 
 <style lang="scss" scoped>
-.chart-pool {
-  width: 240px;
-  margin-bottom: -5px;
+  .chart-pool {
+    width: 240px;
+    margin-bottom: -5px;
 
-  @include flex-grid-layout();
-}
-.chart-item {
-  @include flex-grid-layout-children(4, 24%);
-
-  height: 0;
-  padding-bottom: 25%;
-  flex-shrink: 0;
-  position: relative;
-  cursor: pointer;
-}
-.chart-content {
-  @include absolute-0();
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #999;
-
-  &:hover {
-    color: $themeColor;
+    @include flex-grid-layout();
   }
+  .chart-item {
+    @include flex-grid-layout-children(4, 24%);
 
-  .name {
-    margin-top: 4px;
+    height: 0;
+    padding-bottom: 25%;
+    flex-shrink: 0;
+    position: relative;
+    cursor: pointer;
   }
-}
+  .chart-content {
+    @include absolute-0();
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #999;
+
+    &:hover {
+      color: $themeColor;
+    }
+
+    .name {
+      margin-top: 4px;
+    }
+  }
 </style>

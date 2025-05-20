@@ -13,7 +13,9 @@ export const fillDigit = (digit: number, len: number) => {
  * 判断设备
  */
 export const isPC = () => {
-  return !navigator.userAgent.match(/(iPhone|iPod|iPad|Android|Mobile|BlackBerry|Symbian|Windows Phone)/i)
+  return !navigator.userAgent.match(
+    /(iPhone|iPod|iPad|Android|Mobile|BlackBerry|Symbian|Windows Phone)/i
+  )
 }
 
 /**

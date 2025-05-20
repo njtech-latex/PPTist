@@ -89,12 +89,16 @@ const message: Message = (options: MessageOptions) => {
   return instance
 }
 
-message.success = (msg: string, options?: MessageTypeOptions) => message({ ...options, type: 'success', message: msg })
-message.info = (msg: string, options?: MessageTypeOptions) => message({ ...options, type: 'info', message: msg })
-message.warning = (msg: string, options?: MessageTypeOptions) => message({ ...options, type: 'warning', message: msg })
-message.error = (msg: string, options?: MessageTypeOptions) => message({ ...options, type: 'error', message: msg })
+message.success = (msg: string, options?: MessageTypeOptions) =>
+  message({ ...options, type: 'success', message: msg })
+message.info = (msg: string, options?: MessageTypeOptions) =>
+  message({ ...options, type: 'info', message: msg })
+message.warning = (msg: string, options?: MessageTypeOptions) =>
+  message({ ...options, type: 'warning', message: msg })
+message.error = (msg: string, options?: MessageTypeOptions) =>
+  message({ ...options, type: 'error', message: msg })
 
-message.closeAll = function() {
+message.closeAll = function () {
   for (let i = instances.length - 1; i >= 0; i--) {
     instances[i].close()
   }

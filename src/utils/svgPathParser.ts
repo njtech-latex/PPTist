@@ -21,7 +21,7 @@ const typeMap = {
 export const parseSvgPath = (d: string) => {
   const pathData = new SVGPathData(d)
 
-  const ret = pathData.commands.map(item => {
+  const ret = pathData.commands.map((item) => {
     return { ...item, type: typeMap[item.type] }
   })
   return ret
@@ -35,7 +35,7 @@ export type SvgPath = ReturnType<typeof parseSvgPath>
  */
 export const toPoints = (d: string) => {
   const pathData = new SVGPathData(d)
-  
+
   const points = []
   for (const item of pathData.commands) {
     const type = typeMap[item.type]
@@ -50,7 +50,7 @@ export const toPoints = (d: string) => {
     }
     if (item.type === 32) {
       points.push({
-        x: item.x, 
+        x: item.x,
         y: item.y,
         curve: {
           type: 'cubic',
@@ -62,10 +62,9 @@ export const toPoints = (d: string) => {
         relative: item.relative,
         type,
       })
-    }
-    else if (item.type === 128) {
+    } else if (item.type === 128) {
       points.push({
-        x: item.x, 
+        x: item.x,
         y: item.y,
         curve: {
           type: 'quadratic',
@@ -75,8 +74,7 @@ export const toPoints = (d: string) => {
         relative: item.relative,
         type,
       })
-    }
-    else if (item.type === 512) {
+    } else if (item.type === 512) {
       const lastPoint = points[points.length - 1]
       if (!['M', 'L', 'Q', 'C'].includes(lastPoint.type)) continue
 
@@ -93,7 +91,7 @@ export const toPoints = (d: string) => {
       })
       for (const cbPoint of cubicBezierPoints) {
         points.push({
-          x: cbPoint.x, 
+          x: cbPoint.x,
           y: cbPoint.y,
           curve: {
             type: 'cubic',
@@ -106,11 +104,9 @@ export const toPoints = (d: string) => {
           type: 'C',
         })
       }
-    }
-    else if (item.type === 1) {
+    } else if (item.type === 1) {
       points.push({ close: true, type })
-    }
-    else continue
+    } else continue
   }
   return points
 }
@@ -121,8 +117,8 @@ export const getSvgPathRange = (path: string) => {
     const xList = []
     const yList = []
     for (const item of pathData.commands) {
-      const x = ('x' in item) ? item.x : 0
-      const y = ('y' in item) ? item.y : 0
+      const x = 'x' in item ? item.x : 0
+      const y = 'y' in item ? item.y : 0
       xList.push(x)
       yList.push(y)
     }
@@ -132,8 +128,7 @@ export const getSvgPathRange = (path: string) => {
       maxX: Math.max(...xList),
       maxY: Math.max(...yList),
     }
-  }
-  catch {
+  } catch {
     return {
       minX: 0,
       minY: 0,

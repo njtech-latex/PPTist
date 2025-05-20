@@ -19,12 +19,10 @@ export default (wrapRef?: Ref<HTMLElement | undefined>) => {
     if (winHeight / winWidth === viewportRatio.value) {
       width = winWidth
       height = winHeight
-    }
-    else if (winHeight / winWidth > viewportRatio.value) {
+    } else if (winHeight / winWidth > viewportRatio.value) {
       width = winWidth
       height = winWidth * viewportRatio.value
-    }
-    else {
+    } else {
       width = winHeight / viewportRatio.value
       height = winHeight
     }

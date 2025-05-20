@@ -20,7 +20,7 @@ export const initProsemirrorEditor = (
   dom: Element,
   content: string,
   props: Omit<DirectEditorProps, 'state'>,
-  pluginOptions?: PluginOptions,
+  pluginOptions?: PluginOptions
 ) => {
   return new EditorView(dom, {
     state: EditorState.create({

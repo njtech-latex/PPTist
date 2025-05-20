@@ -24,10 +24,13 @@ const orderedList: NodeSpec = {
   content: 'list_item+',
   group: 'block',
   parseDOM: [
-    { 
-      tag: 'ol', 
-      getAttrs: dom => {
-        const order = ((dom as HTMLElement).hasAttribute('start') ? (dom as HTMLElement).getAttribute('start') : 1) || 1
+    {
+      tag: 'ol',
+      getAttrs: (dom) => {
+        const order =
+          ((dom as HTMLElement).hasAttribute('start')
+            ? (dom as HTMLElement).getAttribute('start')
+            : 1) || 1
         const attr: Attr = { order: +order }
 
         const { listStyleType, fontSize, color } = (dom as HTMLElement).style
@@ -36,8 +39,8 @@ const orderedList: NodeSpec = {
         if (color) attr['color'] = color
 
         return attr
-      }
-    }
+      },
+    },
   ],
   toDOM: (node: Node) => {
     const { order, listStyleType, fontsize, color } = node.attrs
@@ -48,7 +51,6 @@ const orderedList: NodeSpec = {
 
     const attr: Attr = { style }
     if (order !== 1) attr['start'] = order
-
 
     return ['ol', attr, 0]
   },
@@ -71,7 +73,7 @@ const bulletList: NodeSpec = {
   parseDOM: [
     {
       tag: 'ul',
-      getAttrs: dom => {
+      getAttrs: (dom) => {
         const attr: Attr = {}
 
         const { listStyleType, fontSize, color } = (dom as HTMLElement).style
@@ -80,8 +82,8 @@ const bulletList: NodeSpec = {
         if (color) attr['color'] = color
 
         return attr
-      }
-    }
+      },
+    },
   ],
   toDOM: (node: Node) => {
     const { listStyleType, fontsize, color } = node.attrs
@@ -117,7 +119,7 @@ const paragraph: NodeSpec = {
   parseDOM: [
     {
       tag: 'p',
-      getAttrs: dom => {
+      getAttrs: (dom) => {
         const { textAlign, textIndent } = (dom as HTMLElement).style
 
         let align = (dom as HTMLElement).getAttribute('align') || textAlign || ''
@@ -127,17 +129,16 @@ const paragraph: NodeSpec = {
         if (textIndent) {
           if (/em/.test(textIndent)) {
             textIndentLevel = parseInt(textIndent)
-          }
-          else if (/px/.test(textIndent)) {
+          } else if (/px/.test(textIndent)) {
             textIndentLevel = Math.floor(parseInt(textIndent) / 16)
             if (!textIndentLevel) textIndentLevel = 1
           }
         }
 
         const indent = +((dom as HTMLElement).getAttribute('data-indent') || 0)
-      
+
         return { align, indent, textIndent: textIndentLevel }
-      }
+      },
     },
     {
       tag: 'img',
@@ -161,18 +162,14 @@ const paragraph: NodeSpec = {
   },
 }
 
-const {
-  doc,
-  blockquote,
-  text,
-} = nodes
+const { doc, blockquote, text } = nodes
 
 export default {
   doc,
   paragraph,
   blockquote,
   text,
-  'ordered_list': orderedList,
-  'bullet_list': bulletList,
-  'list_item': listItem,
+  ordered_list: orderedList,
+  bullet_list: bulletList,
+  list_item: listItem,
 }

@@ -12,7 +12,12 @@ interface TextStyleAttr {
   fontsize?: string
 }
 
-export const toggleList = (listType: NodeType, itemType: NodeType, listStyleType: string, textStyleAttr: TextStyleAttr = {}) => {
+export const toggleList = (
+  listType: NodeType,
+  itemType: NodeType,
+  listStyleType: string,
+  textStyleAttr: TextStyleAttr = {}
+) => {
   return (state: EditorState, dispatch: (tr: Transaction) => void) => {
     const { schema, selection } = state
     const { $from, $to } = selection

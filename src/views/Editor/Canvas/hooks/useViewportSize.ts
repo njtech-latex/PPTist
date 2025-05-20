@@ -21,8 +21,7 @@ export default (canvasRef: Ref<HTMLElement | undefined>) => {
       mainStore.setCanvasScale(viewportActualWidth / viewportSize.value)
       viewportLeft.value = (canvasWidth - viewportActualWidth) / 2
       viewportTop.value = (canvasHeight - viewportActualWidth * viewportRatio.value) / 2
-    }
-    else {
+    } else {
       const viewportActualHeight = canvasHeight * (canvasPercentage.value / 100)
       mainStore.setCanvasScale(viewportActualHeight / (viewportSize.value * viewportRatio.value))
       viewportLeft.value = (canvasWidth - viewportActualHeight / viewportRatio.value) / 2
@@ -36,7 +35,7 @@ export default (canvasRef: Ref<HTMLElement | undefined>) => {
     const canvasWidth = canvasRef.value.clientWidth
     const canvasHeight = canvasRef.value.clientHeight
 
-    if (canvasHeight / canvasWidth > viewportRatio.value) {      
+    if (canvasHeight / canvasWidth > viewportRatio.value) {
       const newViewportActualWidth = canvasWidth * (newValue / 100)
       const oldViewportActualWidth = canvasWidth * (oldValue / 100)
       const newViewportActualHeight = newViewportActualWidth * viewportRatio.value
@@ -44,10 +43,11 @@ export default (canvasRef: Ref<HTMLElement | undefined>) => {
 
       mainStore.setCanvasScale(newViewportActualWidth / viewportSize.value)
 
-      viewportLeft.value = viewportLeft.value - (newViewportActualWidth - oldViewportActualWidth) / 2
-      viewportTop.value = viewportTop.value - (newViewportActualHeight - oldViewportActualHeight) / 2
-    }
-    else {
+      viewportLeft.value =
+        viewportLeft.value - (newViewportActualWidth - oldViewportActualWidth) / 2
+      viewportTop.value =
+        viewportTop.value - (newViewportActualHeight - oldViewportActualHeight) / 2
+    } else {
       const newViewportActualHeight = canvasHeight * (newValue / 100)
       const oldViewportActualHeight = canvasHeight * (oldValue / 100)
       const newViewportActualWidth = newViewportActualHeight / viewportRatio.value
@@ -55,8 +55,10 @@ export default (canvasRef: Ref<HTMLElement | undefined>) => {
 
       mainStore.setCanvasScale(newViewportActualHeight / (viewportSize.value * viewportRatio.value))
 
-      viewportLeft.value = viewportLeft.value - (newViewportActualWidth - oldViewportActualWidth) / 2
-      viewportTop.value = viewportTop.value - (newViewportActualHeight - oldViewportActualHeight) / 2
+      viewportLeft.value =
+        viewportLeft.value - (newViewportActualWidth - oldViewportActualWidth) / 2
+      viewportTop.value =
+        viewportTop.value - (newViewportActualHeight - oldViewportActualHeight) / 2
     }
   }
 
@@ -98,7 +100,7 @@ export default (canvasRef: Ref<HTMLElement | undefined>) => {
     const originLeft = viewportLeft.value
     const originTop = viewportTop.value
 
-    document.onmousemove = e => {
+    document.onmousemove = (e) => {
       if (!isMouseDown) return
 
       const currentPageX = e.pageX

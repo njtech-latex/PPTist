@@ -79,6 +79,7 @@ A. 首先需要说明，AIPPT不是PPTist的重点，现在或以后都不是，
 A. 另外需要强调，PPTist只是一个开源项目而非面向普通用户的产品，主要提供的是技术解决方案，一些产品化的需求/优化还需要开发者自己去实现和完善。
 
 ## FAQ
+
 #### Q. Why doesn’t the xxx shortcut work?
 
 A. Some shortcuts only work when the focus is on a specific area. For example, the shortcuts for operating pages only work when the focus is on the thumbnail list on the left, and the shortcuts for operating elements only work when the focus is on the canvas area.
@@ -148,6 +149,7 @@ A. Everyone knows that for general plugins/libraries, a well-packaged NPM packag
 Therefore, the correct way to develop a project using PPTist is to pull the complete code, try to understand it, and modify it to suit your own needs. There are also similar projects in the community, such as [drawio](https://github.com/jgraph/drawio).
 
 #### Q. About AI PPT
+
 A. I don't want to ride the wave of AI hype, but it's unavoidable as too many people place too much importance on AI. So, I created this DEMO (it's really not that complicated). Currently, this feature is for reference only, and internally, it implements the most basic AI PPT generation logic, which is: template customization + AI-generated data combined with templates + image replacement. To control costs, we can only go this far for now. However, to achieve the effect of a production environment, you would need to do more, such as creating more templates and refining the AI workflow.
 
 Note: Image replacement only provides the method and does not offer an actual demonstration function. You will need to provide your own image sources (such as AI text-to-image generation, image library search matching, etc.).

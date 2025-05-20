@@ -101,7 +101,16 @@ export interface CreatingLineElement {
 }
 export type CreatingElement = CreatingTextElement | CreatingShapeElement | CreatingLineElement
 
-export type TextFormatPainterKeys = 'bold' | 'em' | 'underline' | 'strikethrough' | 'color' | 'backcolor' | 'fontsize' | 'fontname' | 'align'
+export type TextFormatPainterKeys =
+  | 'bold'
+  | 'em'
+  | 'underline'
+  | 'strikethrough'
+  | 'color'
+  | 'backcolor'
+  | 'fontsize'
+  | 'fontname'
+  | 'align'
 
 export interface TextFormatPainter {
   keep: boolean
