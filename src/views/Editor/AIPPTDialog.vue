@@ -43,8 +43,8 @@
          <OutlineEditor v-model:value="outline" />
        </div>
       <div class="btns" v-if="!outlineCreating">
-        <Button class="btn" type="primary" @click="step = 'template'">选择模板</Button>
         <Button class="btn" @click="outline = ''; step = 'setup'">返回重新生成</Button>
+        <Button class="btn" type="primary" @click="step = 'template'">选择模板</Button>
       </div>
     </div>
     <div class="select-template" v-if="step === 'template'">
@@ -59,8 +59,8 @@
         </div>
       </div>
       <div class="btns">
-        <Button class="btn" type="primary" @click="createPPT()">生成</Button>
         <Button class="btn" @click="step = 'outline'">返回大纲</Button>
+        <Button class="btn" type="primary" @click="createPPT()">生成</Button>
       </div>
     </div>
 
@@ -164,24 +164,38 @@ const createPPT = async () => {
 
   const reader: ReadableStreamDefaultReader = stream.body.getReader()
   const decoder = new TextDecoder('utf-8')
-  
+
+  let chunk = ''
+
   const readStream = () => {
+    const renderPPT = (content: string|string[]) => {
+      const lines = Array.isArray(content) ? content : content.split('\n')
+      lines.filter(l => l.trim().length).forEach(line => {
+        try {
+          const slide: AIPPTSlide = JSON.parse(line)
+          AIPPT(templateSlides, [slide])
+        }
+        catch (err) {
+          // eslint-disable-next-line
+          console.error(err)
+        }
+      })
+    }
+
     reader.read().then(({ done, value }) => {
       if (done) {
+        if (chunk) renderPPT(chunk)
+
         loading.value = false
         mainStore.setAIPPTDialogState(false)
         return
       }
-  
-      const chunk = decoder.decode(value, { stream: true })
-      try {
-        const slide: AIPPTSlide = JSON.parse(chunk)
-        AIPPT(templateSlides, [slide])
-      }
-      catch (err) {
-        // eslint-disable-next-line
-        console.error(err)
-      }
+
+      chunk += decoder.decode(value, { stream: true })
+      const lines = chunk.split('\n')
+      chunk = lines.pop() ?? ''
+
+      renderPPT(lines)
 
       readStream()
     })

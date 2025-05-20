@@ -1,7 +1,6 @@
 import axios from './config'
+import url from './utils/url'
 
-// export const SERVER_URL = 'http://localhost:5000'
-export const SERVER_URL = (import.meta.env.MODE === 'development') ? '/api' : 'https://server.pptist.cn'
 export const ASSET_URL = 'https://asset.pptist.cn'
 
 export default {
@@ -18,7 +17,7 @@ export default {
     language: string,
     model: string,
   ): Promise<any> {
-    return fetch(`${SERVER_URL}/tools/aippt_outline`, {
+    return fetch(url('/ppt/outline'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -37,7 +36,7 @@ export default {
     language: string,
     model: string,
   ): Promise<any> {
-    return fetch(`${SERVER_URL}/tools/aippt`, {
+    return fetch(url('/ppt/slides'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
