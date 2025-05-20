@@ -55,7 +55,7 @@
   import SearchPanel from './SearchPanel.vue'
   import NotesPanel from './NotesPanel.vue'
   import MarkupPanel from './MarkupPanel.vue'
-  import AIPPTDialog from './AIPPTDialog.vue'
+  import AIPPTDialog from './AIPPTDialog/index.vue'
   import Modal from '@/components/Modal.vue'
 
   const mainStore = useMainStore()

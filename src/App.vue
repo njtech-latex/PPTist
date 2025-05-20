@@ -14,9 +14,8 @@
   import { LOCALSTORAGE_KEY_DISCARDED_DB } from '@/configs/storage'
   import { deleteDiscardedDB } from '@/utils/database'
   import { isPC } from '@/utils/common'
-  import type { Slide } from '@/types/slides'
+  import { mocks } from './configs/mocks'
   import message from './utils/message'
-  import api from '@/services'
 
   import Editor from './views/Editor/index.vue'
   import Screen from './views/Screen/index.vue'
@@ -42,14 +41,9 @@
         duration: 0,
         closable: true,
       })
-      api.getMockData('slides').then((slides: Slide[]) => {
-        slidesStore.setSlides(slides)
-      })
-    } else {
-      api.getFileData('slides').then((slides: Slide[]) => {
-        slidesStore.setSlides(slides)
-      })
     }
+
+    slidesStore.setSlides((await mocks).initSlides)
 
     await deleteDiscardedDB()
     snapshotStore.initSnapshotDatabase()

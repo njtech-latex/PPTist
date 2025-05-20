@@ -46,7 +46,12 @@
           "fill": "#ffffff",
           "fixedRatio": false,
           "rotate": 0,
-          "shadow": { "h": 4, "v": 4, "blur": 8, "color": "rgba(128, 128, 128, 0.13)" },
+          "shadow": {
+            "h": 4,
+            "v": 4,
+            "blur": 8,
+            "color": "rgba(128, 128, 128, 0.13)"
+          },
           "lock": true,
           "pathFormula": "roundRect",
           "keypoints": [0.052705832262764374]
@@ -107,7 +112,10 @@
           "lock": true
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "cover"
     },
     {
@@ -116,7 +124,7 @@
         {
           "type": "image",
           "id": "MhzO_xnZA-",
-          "src": "https://images.pexels.com/photos/6743444/pexels-photo-6743444.jpeg?auto=compress&cs=tinysrgb&w=600",
+          "src": "images/6mqTzDcyrR.jpeg",
           "width": 998.5207100591715,
           "height": 562.5,
           "left": 1.4792899408284939,
@@ -181,7 +189,10 @@
           "lock": true
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "cover"
     },
     {
@@ -290,7 +301,10 @@
           "lock": true
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "cover"
     },
     {
@@ -299,7 +313,7 @@
         {
           "type": "image",
           "id": "uMd6Dd3-QC",
-          "src": "https://images.pexels.com/photos/6743444/pexels-photo-6743444.jpeg?auto=compress&cs=tinysrgb&w=600",
+          "src": "images/6mqTzDcyrR.jpeg",
           "width": 998.5207100591715,
           "height": 562.5,
           "left": -2.1760371282653068e-14,
@@ -425,7 +439,10 @@
           "textType": "content"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "cover"
     },
     {
@@ -589,7 +606,10 @@
           "textType": "item"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "contents"
     },
     {
@@ -796,7 +816,10 @@
           "textType": "item"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "contents"
     },
     {
@@ -1046,7 +1069,10 @@
           "textType": "item"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "contents"
     },
     {
@@ -1339,7 +1365,10 @@
           "textType": "item"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "contents"
     },
     {
@@ -1675,7 +1704,10 @@
           "textType": "item"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "contents"
     },
     {
@@ -1695,13 +1727,17 @@
           "rotate": 32,
           "pathFormula": "roundRect",
           "keypoints": [0.08725601207807614],
-          "outline": { "width": 4, "color": "#47acc5", "style": "solid" },
+          "outline": {
+            "width": 4,
+            "color": "#47acc5",
+            "style": "solid"
+          },
           "lock": true
         },
         {
           "type": "image",
           "id": "uDX8rgj65C",
-          "src": "https://images.pexels.com/photos/29928161/pexels-photo-29928161.jpeg?auto=compress&cs=tinysrgb&w=600",
+          "src": "images/OoWeIcEWjW.jpeg",
           "width": 240,
           "height": 240,
           "left": 67.15787002018396,
@@ -1715,7 +1751,9 @@
               [100, 100]
             ]
           },
-          "filters": { "grayscale": "100%" },
+          "filters": {
+            "grayscale": "100%"
+          },
           "imageType": "pageFigure",
           "radius": 15,
           "colorMask": "rgba(71, 172, 197, 0.41)",
@@ -2057,7 +2095,10 @@
           "textType": "itemNumber"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "contents"
     },
     {
@@ -2077,13 +2118,17 @@
           "rotate": 32,
           "pathFormula": "roundRect",
           "keypoints": [0.08725601207807614],
-          "outline": { "width": 4, "color": "#47acc5", "style": "solid" },
+          "outline": {
+            "width": 4,
+            "color": "#47acc5",
+            "style": "solid"
+          },
           "lock": true
         },
         {
           "type": "image",
           "id": "upDfr9VUdh",
-          "src": "https://images.pexels.com/photos/29928161/pexels-photo-29928161.jpeg?auto=compress&cs=tinysrgb&w=600",
+          "src": "images/OoWeIcEWjW.jpeg",
           "width": 240,
           "height": 240,
           "left": 67.15787002018396,
@@ -2097,7 +2142,9 @@
               [100, 100]
             ]
           },
-          "filters": { "grayscale": "100%" },
+          "filters": {
+            "grayscale": "100%"
+          },
           "imageType": "pageFigure",
           "radius": 15,
           "colorMask": "rgba(71, 172, 197, 0.41)",
@@ -2439,7 +2486,10 @@
           "textType": "itemNumber"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "contents"
     },
     {
@@ -2448,7 +2498,7 @@
         {
           "type": "image",
           "id": "_TRu0rXSME",
-          "src": "https://images.pexels.com/photos/30194580/pexels-photo-30194580/free-photo-of-colorful-backstreet-in-istanbul-with-yellow-scooter.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
+          "src": "images/rIGGrf13ep.jpeg",
           "width": 375.00000000000006,
           "height": 562.5,
           "left": 0.7413997627520672,
@@ -2701,7 +2751,10 @@
           "lock": true
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "contents"
     },
     {
@@ -2925,7 +2978,7 @@
         {
           "type": "image",
           "id": "UIJ6GPLX-B",
-          "src": "https://images.pexels.com/photos/30194580/pexels-photo-30194580/free-photo-of-colorful-backstreet-in-istanbul-with-yellow-scooter.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
+          "src": "images/rIGGrf13ep.jpeg",
           "width": 375.00000000000006,
           "height": 562.5,
           "left": 0.7413997627520672,
@@ -3006,7 +3059,10 @@
           "groupId": "S03rA3SwRo"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "contents"
     },
     {
@@ -3015,7 +3071,7 @@
         {
           "type": "image",
           "id": "0VbmtXCjFW",
-          "src": "https://images.pexels.com/photos/30194580/pexels-photo-30194580/free-photo-of-colorful-backstreet-in-istanbul-with-yellow-scooter.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
+          "src": "images/rIGGrf13ep.jpeg",
           "width": 375.00000000000006,
           "height": 562.5,
           "left": 625,
@@ -3309,7 +3365,10 @@
           "textType": "item"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "contents"
     },
     {
@@ -3318,7 +3377,7 @@
         {
           "type": "image",
           "id": "5Rf2M51IAH",
-          "src": "https://images.pexels.com/photos/30194580/pexels-photo-30194580/free-photo-of-colorful-backstreet-in-istanbul-with-yellow-scooter.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
+          "src": "images/rIGGrf13ep.jpeg",
           "width": 375.00000000000006,
           "height": 562.5,
           "left": 624.9999999999999,
@@ -3655,7 +3714,10 @@
           "textType": "item"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "contents"
     },
     {
@@ -3675,8 +3737,17 @@
           "rotate": 0,
           "pathFormula": "roundRect",
           "keypoints": [0.08974358974358973],
-          "outline": { "width": 10, "color": "#47acc5", "style": "solid" },
-          "shadow": { "h": 1, "v": 1, "blur": 1, "color": "rgb(150, 150, 150)" },
+          "outline": {
+            "width": 10,
+            "color": "#47acc5",
+            "style": "solid"
+          },
+          "shadow": {
+            "h": 1,
+            "v": 1,
+            "blur": 1,
+            "color": "rgb(150, 150, 150)"
+          },
           "lock": true
         },
         {
@@ -3756,7 +3827,10 @@
           "textType": "partNumber"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "transition"
     },
     {
@@ -3765,7 +3839,7 @@
         {
           "type": "image",
           "id": "RPVibyMLjD",
-          "src": "https://images.pexels.com/photos/6743444/pexels-photo-6743444.jpeg?auto=compress&cs=tinysrgb&w=600",
+          "src": "images/6mqTzDcyrR.jpeg",
           "width": 998.5207100591715,
           "height": 562.5,
           "left": 1.4792899408284939,
@@ -3813,7 +3887,11 @@
           "fill": "#00000000",
           "fixedRatio": true,
           "rotate": 0,
-          "outline": { "width": 2, "color": "rgba(71, 172, 197, 0.41)", "style": "solid" },
+          "outline": {
+            "width": 2,
+            "color": "rgba(71, 172, 197, 0.41)",
+            "style": "solid"
+          },
           "lock": true
         },
         {
@@ -3880,7 +3958,10 @@
           "textType": "content"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "transition"
     },
     {
@@ -3889,7 +3970,7 @@
         {
           "type": "image",
           "id": "GFOr7F1TiK",
-          "src": "https://images.pexels.com/photos/6743444/pexels-photo-6743444.jpeg?auto=compress&cs=tinysrgb&w=600",
+          "src": "images/6mqTzDcyrR.jpeg",
           "width": 998.5207100591715,
           "height": 562.5,
           "left": 1.4792899408284939,
@@ -3989,7 +4070,10 @@
           "textType": "content"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "transition"
     },
     {
@@ -3998,7 +4082,7 @@
         {
           "type": "image",
           "id": "NE5UdOULyX",
-          "src": "https://images.pexels.com/photos/6743444/pexels-photo-6743444.jpeg?auto=compress&cs=tinysrgb&w=600",
+          "src": "images/6mqTzDcyrR.jpeg",
           "width": 998.5207100591715,
           "height": 562.5,
           "left": 1.4792899408284939,
@@ -4049,7 +4133,11 @@
           "rotate": 0,
           "pathFormula": "roundRect",
           "keypoints": [0.0496987951807229],
-          "outline": { "width": 2, "color": "#47acc5", "style": "solid" },
+          "outline": {
+            "width": 2,
+            "color": "#47acc5",
+            "style": "solid"
+          },
           "lock": true
         },
         {
@@ -4066,7 +4154,11 @@
           "rotate": 0,
           "pathFormula": "roundRect",
           "keypoints": [0.0496987951807229],
-          "outline": { "width": 2, "color": "rgba(71,172,197,0.24)", "style": "solid" },
+          "outline": {
+            "width": 2,
+            "color": "rgba(71,172,197,0.24)",
+            "style": "solid"
+          },
           "lock": true
         },
         {
@@ -4099,7 +4191,10 @@
           "textType": "content"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "transition"
     },
     {
@@ -4156,7 +4251,7 @@
         {
           "type": "image",
           "id": "t3GWOKZ80H",
-          "src": "https://images.pexels.com/photos/29928161/pexels-photo-29928161.jpeg?auto=compress&cs=tinysrgb&w=600",
+          "src": "images/OoWeIcEWjW.jpeg",
           "width": 562.5,
           "height": 562.5,
           "left": 718.75,
@@ -4170,7 +4265,10 @@
               [100, 100]
             ]
           },
-          "filters": { "grayscale": "100%", "opacity": "20%" },
+          "filters": {
+            "grayscale": "100%",
+            "opacity": "20%"
+          },
           "lock": true,
           "imageType": "pageFigure",
           "radius": 0
@@ -4205,7 +4303,10 @@
           "textType": "content"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "transition"
     },
     {
@@ -4214,7 +4315,7 @@
         {
           "type": "image",
           "id": "j8cHew7DaR",
-          "src": "https://images.pexels.com/photos/30194580/pexels-photo-30194580/free-photo-of-colorful-backstreet-in-istanbul-with-yellow-scooter.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
+          "src": "images/rIGGrf13ep.jpeg",
           "width": 375.00000000000006,
           "height": 562.5,
           "left": 0.7413997627520672,
@@ -4294,7 +4395,10 @@
           "width": 1
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "transition"
     },
     {
@@ -4356,7 +4460,11 @@
           "fill": "#ffffff",
           "fixedRatio": false,
           "rotate": 0,
-          "outline": { "width": 2, "color": "#47acc5", "style": "solid" },
+          "outline": {
+            "width": 2,
+            "color": "#47acc5",
+            "style": "solid"
+          },
           "pathFormula": "roundRect",
           "keypoints": [0.0472972972972973],
           "groupId": "6M836b8fnn"
@@ -4440,7 +4548,11 @@
           "fill": "#ffffff",
           "fixedRatio": false,
           "rotate": 0,
-          "outline": { "width": 2, "color": "#47acc5", "style": "solid" },
+          "outline": {
+            "width": 2,
+            "color": "#47acc5",
+            "style": "solid"
+          },
           "pathFormula": "roundRect",
           "keypoints": [0.0472972972972973],
           "groupId": "FqPI8V9ve9"
@@ -4497,7 +4609,10 @@
           "groupId": "FqPI8V9ve9"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "content"
     },
     {
@@ -4559,7 +4674,11 @@
           "fill": "#ffffff",
           "fixedRatio": false,
           "rotate": 0,
-          "outline": { "width": 2, "color": "#47acc5", "style": "solid" },
+          "outline": {
+            "width": 2,
+            "color": "#47acc5",
+            "style": "solid"
+          },
           "pathFormula": "roundRect",
           "keypoints": [0.0472972972972973],
           "groupId": "_qtwOAxSod"
@@ -4643,7 +4762,11 @@
           "fill": "#ffffff",
           "fixedRatio": false,
           "rotate": 0,
-          "outline": { "width": 2, "color": "#47acc5", "style": "solid" },
+          "outline": {
+            "width": 2,
+            "color": "#47acc5",
+            "style": "solid"
+          },
           "pathFormula": "roundRect",
           "keypoints": [0.0472972972972973],
           "groupId": "FBJi8Y1W8n"
@@ -4727,7 +4850,11 @@
           "fill": "#ffffff",
           "fixedRatio": false,
           "rotate": 0,
-          "outline": { "width": 2, "color": "#47acc5", "style": "solid" },
+          "outline": {
+            "width": 2,
+            "color": "#47acc5",
+            "style": "solid"
+          },
           "pathFormula": "roundRect",
           "keypoints": [0.0472972972972973],
           "groupId": "rR6KCrjwN4"
@@ -4784,7 +4911,10 @@
           "groupId": "rR6KCrjwN4"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "content"
     },
     {
@@ -4846,7 +4976,11 @@
           "fill": "#ffffff",
           "fixedRatio": false,
           "rotate": 0,
-          "outline": { "width": 2, "color": "#47acc5", "style": "solid" },
+          "outline": {
+            "width": 2,
+            "color": "#47acc5",
+            "style": "solid"
+          },
           "pathFormula": "roundRect",
           "keypoints": [0.0472972972972973],
           "groupId": "h1cQNP03Fi"
@@ -4930,7 +5064,11 @@
           "fill": "#ffffff",
           "fixedRatio": false,
           "rotate": 0,
-          "outline": { "width": 2, "color": "#47acc5", "style": "solid" },
+          "outline": {
+            "width": 2,
+            "color": "#47acc5",
+            "style": "solid"
+          },
           "pathFormula": "roundRect",
           "keypoints": [0.0472972972972973],
           "groupId": "9iqZ3CElAA"
@@ -5014,7 +5152,11 @@
           "fill": "#ffffff",
           "fixedRatio": false,
           "rotate": 0,
-          "outline": { "width": 2, "color": "#47acc5", "style": "solid" },
+          "outline": {
+            "width": 2,
+            "color": "#47acc5",
+            "style": "solid"
+          },
           "pathFormula": "roundRect",
           "keypoints": [0.0472972972972973],
           "groupId": "GHSmRHn3gV"
@@ -5098,7 +5240,11 @@
           "fill": "#ffffff",
           "fixedRatio": false,
           "rotate": 0,
-          "outline": { "width": 2, "color": "#47acc5", "style": "solid" },
+          "outline": {
+            "width": 2,
+            "color": "#47acc5",
+            "style": "solid"
+          },
           "pathFormula": "roundRect",
           "keypoints": [0.0472972972972973],
           "groupId": "yijhqOeU5p"
@@ -5155,7 +5301,10 @@
           "groupId": "yijhqOeU5p"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "content"
     },
     {
@@ -5164,7 +5313,7 @@
         {
           "type": "image",
           "id": "u0n6J7-h-H",
-          "src": "https://images.pexels.com/photos/6743444/pexels-photo-6743444.jpeg?auto=compress&cs=tinysrgb&w=600",
+          "src": "images/6mqTzDcyrR.jpeg",
           "width": 998.5207100591715,
           "height": 562.5,
           "left": 0,
@@ -5199,7 +5348,11 @@
           "fill": "#00000000",
           "fixedRatio": false,
           "rotate": 0,
-          "outline": { "width": 3, "color": "#eeece1", "style": "solid" },
+          "outline": {
+            "width": 3,
+            "color": "#eeece1",
+            "style": "solid"
+          },
           "lock": true
         },
         {
@@ -5214,7 +5367,11 @@
           "fill": "#00000000",
           "fixedRatio": false,
           "rotate": 0,
-          "outline": { "width": 3, "color": "#eeece1", "style": "solid" },
+          "outline": {
+            "width": 3,
+            "color": "#eeece1",
+            "style": "solid"
+          },
           "lock": true
         },
         {
@@ -5350,7 +5507,10 @@
           "groupId": "8WcDQ7PJZ9"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "content"
     },
     {
@@ -5359,7 +5519,7 @@
         {
           "type": "image",
           "id": "mvwCLbr24f",
-          "src": "https://images.pexels.com/photos/6743444/pexels-photo-6743444.jpeg?auto=compress&cs=tinysrgb&w=600",
+          "src": "images/6mqTzDcyrR.jpeg",
           "width": 998.5207100591715,
           "height": 562.5,
           "left": 0,
@@ -5394,7 +5554,11 @@
           "fill": "#00000000",
           "fixedRatio": false,
           "rotate": 0,
-          "outline": { "width": 3, "color": "#eeece1", "style": "solid" },
+          "outline": {
+            "width": 3,
+            "color": "#eeece1",
+            "style": "solid"
+          },
           "lock": true
         },
         {
@@ -5409,7 +5573,11 @@
           "fill": "#00000000",
           "fixedRatio": false,
           "rotate": 0,
-          "outline": { "width": 3, "color": "#eeece1", "style": "solid" },
+          "outline": {
+            "width": 3,
+            "color": "#eeece1",
+            "style": "solid"
+          },
           "lock": true
         },
         {
@@ -5604,7 +5772,10 @@
           "groupId": "rN7DnfsdzE"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "content"
     },
     {
@@ -5613,7 +5784,7 @@
         {
           "type": "image",
           "id": "D0gTmWffmC",
-          "src": "https://images.pexels.com/photos/6743444/pexels-photo-6743444.jpeg?auto=compress&cs=tinysrgb&w=600",
+          "src": "images/6mqTzDcyrR.jpeg",
           "width": 1000,
           "height": 562.5,
           "left": 0,
@@ -5915,7 +6086,10 @@
           "lock": true
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "content"
     },
     {
@@ -6052,7 +6226,7 @@
         {
           "type": "image",
           "id": "LiXDOUqmUt",
-          "src": "https://images.pexels.com/photos/5037588/pexels-photo-5037588.jpeg?auto=compress&cs=tinysrgb&w=600",
+          "src": "images/LiXDOUqmUt.jpeg",
           "width": 380.85705812574145,
           "height": 380.85705812574145,
           "left": 60.35818876037958,
@@ -6089,7 +6263,10 @@
           "rotate": 0
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "content"
     },
     {
@@ -6166,7 +6343,7 @@
         {
           "type": "image",
           "id": "ygtMWTIcP1",
-          "src": "https://images.pexels.com/photos/30194580/pexels-photo-30194580/free-photo-of-colorful-backstreet-in-istanbul-with-yellow-scooter.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
+          "src": "images/rIGGrf13ep.jpeg",
           "width": 228.9442467378411,
           "height": 343.4163701067616,
           "left": 374.4151282621589,
@@ -6281,7 +6458,10 @@
           "textType": "item"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "content"
     },
     {
@@ -6358,7 +6538,7 @@
         {
           "type": "image",
           "id": "ZXmOdFHuuD",
-          "src": "https://images.pexels.com/photos/30194580/pexels-photo-30194580/free-photo-of-colorful-backstreet-in-istanbul-with-yellow-scooter.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
+          "src": "images/rIGGrf13ep.jpeg",
           "width": 228.9442467378411,
           "height": 343.4163701067616,
           "left": 374.4151282621589,
@@ -6473,7 +6653,10 @@
           "textType": "item"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "content"
     },
     {
@@ -6550,7 +6733,7 @@
         {
           "type": "image",
           "id": "3U__X0k9a1",
-          "src": "https://images.pexels.com/photos/30194580/pexels-photo-30194580/free-photo-of-colorful-backstreet-in-istanbul-with-yellow-scooter.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
+          "src": "images/rIGGrf13ep.jpeg",
           "width": 228.9442467378411,
           "height": 343.4163701067616,
           "left": 374.4151282621589,
@@ -6695,7 +6878,10 @@
           "textType": "item"
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "content"
     },
     {
@@ -6761,7 +6947,7 @@
         {
           "type": "image",
           "id": "eN4gDxIvAd",
-          "src": "https://images.pexels.com/photos/30194580/pexels-photo-30194580/free-photo-of-colorful-backstreet-in-istanbul-with-yellow-scooter.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
+          "src": "images/rIGGrf13ep.jpeg",
           "width": 375.29655990510093,
           "height": 562.9448398576512,
           "left": 0,
@@ -6828,7 +7014,10 @@
           "lock": true
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "content"
     },
     {
@@ -6874,7 +7063,12 @@
           "fill": "#ffffff",
           "fixedRatio": false,
           "rotate": 0,
-          "shadow": { "h": 4, "v": 4, "blur": 8, "color": "rgba(128, 128, 128, 0.13)" },
+          "shadow": {
+            "h": 4,
+            "v": 4,
+            "blur": 8,
+            "color": "rgba(128, 128, 128, 0.13)"
+          },
           "lock": true,
           "pathFormula": "roundRect",
           "keypoints": [0.052705832262764374]
@@ -6935,7 +7129,10 @@
           "lock": true
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "end"
     },
     {
@@ -6944,7 +7141,7 @@
         {
           "type": "image",
           "id": "VETdDLi0p9",
-          "src": "https://images.pexels.com/photos/6743444/pexels-photo-6743444.jpeg?auto=compress&cs=tinysrgb&w=600",
+          "src": "images/6mqTzDcyrR.jpeg",
           "width": 998.5207100591715,
           "height": 562.5,
           "left": 1.4792899408284939,
@@ -7009,7 +7206,10 @@
           "lock": true
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "end"
     },
     {
@@ -7055,7 +7255,12 @@
           "fill": "#ffffff",
           "fixedRatio": false,
           "rotate": 0,
-          "shadow": { "h": 1, "v": 1, "blur": 1, "color": "rgb(150, 150, 150)" },
+          "shadow": {
+            "h": 1,
+            "v": 1,
+            "blur": 1,
+            "color": "rgb(150, 150, 150)"
+          },
           "lock": true,
           "pathFormula": "roundRect",
           "keypoints": [0.05116765848112107]
@@ -7072,7 +7277,12 @@
           "fill": "#ffffff",
           "fixedRatio": false,
           "rotate": 3,
-          "shadow": { "h": 1, "v": 1, "blur": 1, "color": "rgb(173, 173, 173)" },
+          "shadow": {
+            "h": 1,
+            "v": 1,
+            "blur": 1,
+            "color": "rgb(173, 173, 173)"
+          },
           "lock": true,
           "pathFormula": "roundRect",
           "keypoints": [0.05116765848112107]
@@ -7121,7 +7331,10 @@
           "lock": true
         }
       ],
-      "background": { "type": "solid", "color": "#fff" },
+      "background": {
+        "type": "solid",
+        "color": "#fff"
+      },
       "type": "end"
     }
   ]

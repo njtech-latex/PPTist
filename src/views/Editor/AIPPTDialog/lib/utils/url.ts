@@ -1,7 +1,7 @@
 import { getEnv } from './getEnv'
 
-const productionServer = 'http://127.0.0.1:3412/'
 const localServer = 'http://127.0.0.1:3412/'
+const productionServer = 'http://127.0.0.1:3412/'
 
 export default function url(...paths: string[]) {
   let base = productionServer

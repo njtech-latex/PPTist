@@ -47,8 +47,9 @@
   import { ref, onMounted } from 'vue'
   import { storeToRefs } from 'pinia'
   import { useSlidesStore } from '@/store'
+
+  import { mocks } from '@/configs/mocks'
   import type { Slide } from '@/types/slides'
-  import api from '@/services'
 
   import ThumbnailSlide from '@/views/components/ThumbnailSlide/index.vue'
   import Button from '@/components/Button.vue'
@@ -87,13 +88,10 @@
     emit('selectAll', slides)
   }
 
-  const changeCatalog = (id: string) => {
+  const changeCatalog = async (id: string) => {
     activeCatalog.value = id
-    api.getFileData(activeCatalog.value).then((ret) => {
-      slides.value = ret.slides
-
-      if (listRef.value) listRef.value.scrollTo(0, 0)
-    })
+    slides.value = (await mocks).templates[id]
+    if (listRef.value) listRef.value.scrollTo(0, 0)
   }
 
   onMounted(() => {
