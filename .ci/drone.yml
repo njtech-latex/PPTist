@@ -1,0 +1,67 @@
+---
+kind: pipeline
+type: docker
+name: keepresearch-ppt
+
+steps:
+  - name: restore-cache
+    image: hub.keepresearch.co/drone/drone-volume-cache:latest
+    volumes:
+      - name: cache
+        path: /cache
+    settings:
+      restore: true
+      mount:
+        - ./node_modules
+
+  - name: build
+    image: hub.keepresearch.co/drone/node:20-slim
+    commands:
+      - "npm install && npm run build"
+
+  - name: rebuild-cache
+    image: hub.keepresearch.co/drone/drone-volume-cache:latest
+    volumes:
+      - name: cache
+        path: /cache
+    settings:
+      rebuild: true
+      mount:
+        - ./node_modules
+
+  - name: publish
+    image: plugins/docker:latest
+    pull: if-not-exists
+    settings:
+      purge: false
+      dockerfile: .ci/Dockerfile
+      tag:
+        - latest
+        - ${DRONE_BUILD_NUMBER}
+      username: admin
+      password:
+        from_secret: docker_password
+      insecure: true
+      registry: https://hub.keepresearch.co
+      repo: hub.keepresearch.co/deploy/keepresearch-ppt
+
+  - name: deploy
+    image: hub.keepresearch.co/drone/drone-ssh:latest
+    settings:
+      host:
+        from_secret: deploy_host
+      username: ubuntu
+      key:
+        from_secret: deploy_key
+      script:
+        - docker rm -f keepresearch_ppt
+        - docker pull hub.keepresearch.co/deploy/keepresearch-ppt:${DRONE_BUILD_NUMBER}
+        - docker run --restart=always --name keepresearch_ppt -p 127.0.0.1:8024:80 -d hub.keepresearch.co/deploy/keepresearch-ppt:${DRONE_BUILD_NUMBER}
+
+image_pull_secrets:
+  - dockerconfig
+
+volumes:
+  - name: cache
+    host:
+      path: /front_cache
