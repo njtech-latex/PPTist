@@ -15,9 +15,9 @@ steps:
         - ./node_modules
 
   - name: build
-    image: hub.keepresearch.co/drone/node:20-slim
+    image: hub.keepresearch.co/drone/node:22-slim
     commands:
-      - "npm install && npm run build"
+      - 'npm install && npm run build'
 
   - name: rebuild-cache
     image: hub.keepresearch.co/drone/drone-volume-cache:latest

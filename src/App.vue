@@ -10,12 +10,14 @@
 <script lang="ts" setup>
   import { onMounted } from 'vue'
   import { storeToRefs } from 'pinia'
-  import { useScreenStore, useMainStore, useSnapshotStore, useSlidesStore } from '@/store'
-  import { LOCALSTORAGE_KEY_DISCARDED_DB } from '@/configs/storage'
+
   import { deleteDiscardedDB } from '@/utils/database'
+  import { LOCALSTORAGE_KEY_DISCARDED_DB } from '@/configs/storage'
+  import { useScreenStore, useMainStore, useSnapshotStore, useSlidesStore } from '@/store'
+
   import { isPC } from '@/utils/common'
   import { mocks } from './configs/mocks'
-  import message from './utils/message'
+  import { loadSlides, saveSlides } from './store/slides'
 
   import Editor from './views/Editor/index.vue'
   import Screen from './views/Screen/index.vue'
@@ -31,19 +33,11 @@
   const { slides } = storeToRefs(slidesStore)
   const { screening } = storeToRefs(useScreenStore())
 
-  if (import.meta.env.MODE !== 'development') {
-    window.onbeforeunload = () => false
-  }
-
   onMounted(async () => {
-    if (location.hostname === 'localhost') {
-      message.error('本地开发请访问 http://127.0.0.1:5173，否则不保证数据可靠性', {
-        duration: 0,
-        closable: true,
-      })
-    }
-
-    slidesStore.setSlides((await mocks).initSlides)
+    // 加载并持久化 slides 数据
+    const initSlides = loadSlides() ?? (await mocks).initSlides
+    slidesStore.setSlides(initSlides)
+    slidesStore.$subscribe((_, state) => saveSlides(state.slides))
 
     await deleteDiscardedDB()
     snapshotStore.initSnapshotDatabase()

@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia'
-import { omit } from 'lodash'
-import type { Slide, SlideTheme, PPTElement, PPTAnimation, SlideTemplate } from '@/types/slides'
+import { omit, debounce } from 'lodash'
 
 import template1Cover from '@/assets/images/template_1.jpg'
 import template2Cover from '@/assets/images/template_2.jpg'
 import template3Cover from '@/assets/images/template_3.jpg'
 import template4Cover from '@/assets/images/template_4.jpg'
+
+import { LOCALSTORAGE_KEY_SLIDES } from '@/configs/storage'
+import type { Slide, SlideTheme, PPTElement, PPTAnimation, SlideTemplate } from '@/types/slides'
 
 interface RemovePropData {
   id: string
@@ -32,6 +34,29 @@ export interface SlidesState {
   viewportRatio: number
   templates: SlideTemplate[]
 }
+
+/**
+ * @description 从 localStorage 中加载幻灯片数据
+ */
+export function loadSlides(): Slide[] | null {
+  const slides = localStorage.getItem(LOCALSTORAGE_KEY_SLIDES)
+  if (!slides) return null
+
+  try {
+    const parsed = JSON.parse(slides)
+    return Array.isArray(parsed) ? parsed : null
+  } catch (err) {
+    console.error(err)
+    return null
+  }
+}
+
+/**
+ * @description 将幻灯片数据保存到 localStorage
+ */
+export const saveSlides = debounce((slides: Slide[]) => {
+  localStorage.setItem(LOCALSTORAGE_KEY_SLIDES, JSON.stringify(slides))
+}, 500)
 
 export const useSlidesStore = defineStore('slides', {
   state: (): SlidesState => ({
