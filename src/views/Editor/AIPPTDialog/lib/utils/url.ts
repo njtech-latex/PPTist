@@ -1,11 +1,11 @@
 import { getEnv } from './getEnv'
 
-const localServer = 'http://127.0.0.1:3412/'
-const productionServer = 'http://127.0.0.1:3412/'
+const devServer = 'https://dev.keepresearch.com'
+const productionServer = 'https://www.keepresearch.com'
 
 export default function url(...paths: string[]) {
-  let base = productionServer
-  if (!getEnv().dev) base = localServer
+  let base = devServer
+  if (!getEnv().dev) base = productionServer
 
   const path = paths.join('/').replace(/\/+/g, '/')
   if (!path) return base

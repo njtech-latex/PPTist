@@ -4,9 +4,18 @@
       <span class="title">AIPPT</span>
       <span class="subtite" v-if="step === 'template'">从下方挑选合适的模板，开始生成PPT</span>
       <span class="subtite" v-else-if="step === 'outline'">
-        确认下方内容大纲（点击编辑内容，右键添加/删除大纲项），开始选择模板
+        <span v-if="outlineCreating">
+          <span>大纲内容生成中，请稍后...</span>
+          <IconLoading class="spinner" />
+        </span>
+
+        <span v-else-if="outline">
+          确认下方内容大纲（点击编辑内容，右键添加/删除大纲项），开始选择模板
+        </span>
+
+        <span v-else>大纲生成失败，请稍后重试</span>
       </span>
-      <span class="subtite" v-else>根据您的论文内容，点击AI将自动生成PPT大纲</span>
+      <span class="subtite" v-else>根据您的论文内容，生成PPT大纲</span>
     </div>
 
     <template v-if="step === 'setup'">
@@ -50,6 +59,7 @@
   import { ref } from 'vue'
   import { storeToRefs } from 'pinia'
 
+  import message from '@/utils/message'
   import useAIPPT from '@/hooks/useAIPPT'
   import { mocks } from '@/configs/mocks'
   import { useMainStore, useSlidesStore } from '@/store'
@@ -75,17 +85,22 @@
     loading.value = true
     outlineCreating.value = true
 
-    const stream = await genereatePPTOutline()
+    const res = await genereatePPTOutline('mraddict', 'test')
+    if (typeof res === 'string') {
+      message.error(res)
+      loading.value = false
+      outlineCreating.value = false
+      return
+    }
 
     loading.value = false
     outline.value = ''
     step.value = 'outline'
 
-    const reader: ReadableStreamDefaultReader = stream.body.getReader()
     const decoder = new TextDecoder('utf-8')
 
     const readStream = () => {
-      reader.read().then(({ done, value }) => {
+      res.read().then(({ done, value }) => {
         if (done) {
           outline.value = getMdContent(outline.value)
           outlineCreating.value = false
@@ -108,11 +123,15 @@
   const createPPT = async () => {
     loading.value = true
 
-    const stream = await generatePPTSlides(outline.value)
-    const templateSlides = (await mocks).templates[selectedTemplate.value]
+    const res = await generatePPTSlides('mraddict', 'test', outline.value)
+    if (typeof res === 'string') {
+      message.error(res)
+      loading.value = false
+      return
+    }
 
-    const reader: ReadableStreamDefaultReader = stream.body.getReader()
     const decoder = new TextDecoder('utf-8')
+    const templateSlides = (await mocks).templates[selectedTemplate.value]
 
     let chunk = ''
 
@@ -131,7 +150,7 @@
           })
       }
 
-      reader.read().then(({ done, value }) => {
+      res.read().then(({ done, value }) => {
         if (done) {
           if (chunk) renderPPT(chunk)
 
@@ -237,6 +256,18 @@
         width: 120px;
         margin: 0 5px;
       }
+    }
+  }
+  .spinner {
+    margin-left: 5px;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
     }
   }
 </style>
