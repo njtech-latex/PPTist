@@ -140,7 +140,6 @@
   import Button from '@/components/Button.vue'
   import OutlineEditor from '@/components/OutlineEditor.vue'
   import FullscreenSpin from '@/components/FullscreenSpin.vue'
-  import type { Slide } from '@/types/slides'
 
   const mainStore = useMainStore()
   const { templates } = storeToRefs(useSlidesStore())

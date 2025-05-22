@@ -56,14 +56,6 @@
           >
             幻灯片类型标注
           </PopoverMenuItem>
-          <PopoverMenuItem @click="goLink('https://github.com/pipipi-pikachu/PPTist/issues')">
-            意见反馈
-          </PopoverMenuItem>
-          <PopoverMenuItem
-            @click="goLink('https://github.com/pipipi-pikachu/PPTist/blob/master/doc/Q&A.md')"
-          >
-            常见问题
-          </PopoverMenuItem>
           <PopoverMenuItem
             @click="
               () => {
@@ -91,6 +83,18 @@
     </div>
 
     <div class="right">
+      <div
+        class="menu-item"
+        v-tooltip="'AI生成PPT'"
+        @click="
+          () => {
+            openAIPPTDialog()
+            mainMenuVisible = false
+          }
+        "
+      >
+        <span class="text ai">AI</span>
+      </div>
       <div class="group-menu-item">
         <div class="menu-item" v-tooltip="'幻灯片放映（F5）'" @click="enterScreening()">
           <IconPpt class="icon" />
@@ -105,18 +109,6 @@
       </div>
       <div class="menu-item" v-tooltip="'导出'" @click="setDialogForExport('pptx')">
         <IconDownload class="icon" />
-      </div>
-      <div
-        class="menu-item"
-        v-tooltip="'AI生成PPT'"
-        @click="
-          () => {
-            openAIPPTDialog()
-            mainMenuVisible = false
-          }
-        "
-      >
-        <span class="text ai">AI</span>
       </div>
     </div>
 

@@ -35,9 +35,17 @@
 
   onMounted(async () => {
     // 加载并持久化 slides 数据
-    const initSlides = loadSlides() ?? (await mocks).initSlides
-    slidesStore.setSlides(initSlides)
-    slidesStore.$subscribe((_, state) => saveSlides(state.slides))
+    const initSlides = loadSlides()
+    if (initSlides.slides.length === 0) initSlides.slides = (await mocks).initSlides
+
+    slidesStore.setTitle(initSlides.title)
+    slidesStore.setTheme(initSlides.theme)
+    slidesStore.setViewportSize(initSlides.viewportSize)
+    slidesStore.setViewportRatio(initSlides.viewportRatio)
+    slidesStore.setSlides(initSlides.slides)
+    slidesStore.setTemplates(initSlides.templates)
+
+    slidesStore.$subscribe((_, state) => saveSlides(state))
 
     await deleteDiscardedDB()
     snapshotStore.initSnapshotDatabase()

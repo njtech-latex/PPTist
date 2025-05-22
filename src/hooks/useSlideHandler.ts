@@ -11,6 +11,7 @@ import message from '@/utils/message'
 import usePasteTextClipboardData from '@/hooks/usePasteTextClipboardData'
 import useHistorySnapshot from '@/hooks/useHistorySnapshot'
 import useAddSlidesOrElements from '@/hooks/useAddSlidesOrElements'
+import { loadSlides } from '@/store/slides'
 
 export default () => {
   const mainStore = useMainStore()
@@ -38,9 +39,17 @@ export default () => {
         color: theme.value.backgroundColor,
       },
     }
-    slidesStore.updateSlideIndex(0)
     mainStore.setActiveElementIdList([])
+    slidesStore.updateSlideIndex(0)
+
+    const initSlides = loadSlides('default')
+
+    slidesStore.setTitle(initSlides.title)
+    slidesStore.setTheme(initSlides.theme)
+    slidesStore.setViewportSize(initSlides.viewportSize)
+    slidesStore.setViewportRatio(initSlides.viewportRatio)
     slidesStore.setSlides([emptySlide])
+    slidesStore.setTemplates(initSlides.templates)
   }
 
   /**

@@ -35,60 +35,64 @@ export interface SlidesState {
   templates: SlideTemplate[]
 }
 
+const defaultSlidesState: SlidesState = {
+  title: '未命名演示文稿', // 幻灯片标题
+  theme: {
+    themeColors: ['#5b9bd5', '#ed7d31', '#a5a5a5', '#ffc000', '#4472c4', '#70ad47'],
+    fontColor: '#333',
+    fontName: '',
+    backgroundColor: '#fff',
+    shadow: {
+      h: 3,
+      v: 3,
+      blur: 2,
+      color: '#808080',
+    },
+    outline: {
+      width: 2,
+      color: '#525252',
+      style: 'solid',
+    },
+  }, // 主题样式
+  slides: [], // 幻灯片页面数据
+  slideIndex: 0, // 当前页面索引
+  viewportSize: 1000, // 可视区域宽度基数
+  viewportRatio: 0.5625, // 可视区域比例，默认16:9
+  templates: [
+    { name: '红色通用', id: 'template_1', cover: template1Cover },
+    { name: '蓝色通用', id: 'template_2', cover: template2Cover },
+    { name: '紫色通用', id: 'template_3', cover: template3Cover },
+    { name: '莫兰迪配色', id: 'template_4', cover: template4Cover },
+  ], // 模板
+}
+
 /**
  * @description 从 localStorage 中加载幻灯片数据
  */
-export function loadSlides(): Slide[] | null {
+export function loadSlides(type: 'localStorage' | 'default' = 'localStorage'): SlidesState {
+  if (type === 'default') return defaultSlidesState
+
   const slides = localStorage.getItem(LOCALSTORAGE_KEY_SLIDES)
-  if (!slides) return null
+  if (!slides) return defaultSlidesState
 
   try {
     const parsed = JSON.parse(slides)
-    return Array.isArray(parsed) ? parsed : null
+    return { ...defaultSlidesState, ...parsed }
   } catch (err) {
     console.error(err)
-    return null
+    return defaultSlidesState
   }
 }
 
 /**
  * @description 将幻灯片数据保存到 localStorage
  */
-export const saveSlides = debounce((slides: Slide[]) => {
+export const saveSlides = debounce((slides: SlidesState) => {
   localStorage.setItem(LOCALSTORAGE_KEY_SLIDES, JSON.stringify(slides))
 }, 500)
 
 export const useSlidesStore = defineStore('slides', {
-  state: (): SlidesState => ({
-    title: '未命名演示文稿', // 幻灯片标题
-    theme: {
-      themeColors: ['#5b9bd5', '#ed7d31', '#a5a5a5', '#ffc000', '#4472c4', '#70ad47'],
-      fontColor: '#333',
-      fontName: '',
-      backgroundColor: '#fff',
-      shadow: {
-        h: 3,
-        v: 3,
-        blur: 2,
-        color: '#808080',
-      },
-      outline: {
-        width: 2,
-        color: '#525252',
-        style: 'solid',
-      },
-    }, // 主题样式
-    slides: [], // 幻灯片页面数据
-    slideIndex: 0, // 当前页面索引
-    viewportSize: 1000, // 可视区域宽度基数
-    viewportRatio: 0.5625, // 可视区域比例，默认16:9
-    templates: [
-      { name: '红色通用', id: 'template_1', cover: template1Cover },
-      { name: '蓝色通用', id: 'template_2', cover: template2Cover },
-      { name: '紫色通用', id: 'template_3', cover: template3Cover },
-      { name: '莫兰迪配色', id: 'template_4', cover: template4Cover },
-    ], // 模板
-  }),
+  state: () => defaultSlidesState,
 
   getters: {
     currentSlide(state) {
