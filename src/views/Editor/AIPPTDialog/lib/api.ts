@@ -1,47 +1,84 @@
+import type { ApiResultType } from '@/types/app'
+
 import url from './utils/url'
+import streamWrapperGenerator from '@/utils/streamWrapperGenerator'
+import type { AIPPTSlide } from '@/types/AIPPT'
 
 export async function genereatePPTOutline(
-  open_id: string,
-  slug: string
-): Promise<ReadableStreamDefaultReader | string> {
-  const fallbackMessage = '大纲生成失败，请稍后再试'
+  type: 'subject' | 'file' | 'embed',
+  content: string | File,
+  onData?: (data: string) => void,
+  controller?: AbortController
+): Promise<ApiResultType<string>> {
+  const formData = new FormData()
+  formData.append('type', type)
+  formData.append('content', content)
 
-  try {
-    const apiPath = `/api/compile/v1/users/${open_id}/projects/${slug}/ppt/outline`
-    const res = await fetch(url(apiPath), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-    })
-    if (res.status === 200) return res.body?.getReader() ?? fallbackMessage
-    const { message } = await res.json()
-    return message || fallbackMessage
-  } catch (err) {
-    console.error(err)
-    return fallbackMessage
+  const res = fetch(url('/ppt/outline'), {
+    method: 'POST',
+    credentials: 'include',
+    body: formData,
+    signal: controller?.signal,
+  })
+
+  const streamGenerator = streamWrapperGenerator(res)
+
+  while (true) {
+    const { value } = await streamGenerator.next()
+    if (typeof value === 'object') return value
+    else onData?.(value)
   }
 }
 
 export async function generatePPTSlides(
-  open_id: string,
-  slug: string,
-  outline: string
-): Promise<ReadableStreamDefaultReader | string> {
-  const fallbackMessage = '幻灯片生成失败，请稍后再试'
+  type: 'subject' | 'file' | 'embed',
+  outline: string,
+  content: string | File,
+  onData?: (data: AIPPTSlide) => void,
+  controller?: AbortController
+): Promise<Promise<ApiResultType<AIPPTSlide[]>>> {
+  const formData = new FormData()
+  formData.append('type', type)
+  formData.append('outline', outline)
+  if (type !== 'subject') formData.append('content', content)
 
-  try {
-    const apiPath = `/api/compile/v1/users/${open_id}/projects/${slug}/ppt/slides`
-    const res = await fetch(url(apiPath), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ outline }),
-    })
+  const res = fetch(url('/ppt/slides'), {
+    method: 'POST',
+    credentials: 'include',
+    body: formData,
+    signal: controller?.signal,
+  })
 
-    if (res.status == 200) return res.body?.getReader() ?? fallbackMessage
-    const { message } = await res.json()
-    return message || fallbackMessage
-  } catch (err) {
-    console.error(err)
-    return fallbackMessage
+  const streamGenerator = streamWrapperGenerator(res)
+
+  let chunk = ''
+  const slides: AIPPTSlide[] = []
+
+  while (true) {
+    const { value } = await streamGenerator.next()
+
+    // If the stream is done, break the loop
+    if (typeof value === 'object') {
+      if (!value.success) return value
+      return { success: true, data: slides }
+    }
+
+    // If the stream is not done, process the data
+    chunk += value
+    const lines = chunk.split('\n')
+    chunk = lines.pop() ?? ''
+
+    lines
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .forEach((line) => {
+        try {
+          const slide = JSON.parse(line) as AIPPTSlide
+          onData?.(slide)
+          slides.push(slide)
+        } catch (e) {
+          // Ignore JSON parse errors
+        }
+      })
   }
 }

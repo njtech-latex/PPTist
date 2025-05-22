@@ -15,11 +15,82 @@
 
         <span v-else>大纲生成失败，请稍后重试</span>
       </span>
-      <span class="subtite" v-else>根据您的论文内容，生成PPT大纲</span>
+      <span class="subtite" v-else>根据您的内容，生成PPT大纲</span>
     </div>
 
     <template v-if="step === 'setup'">
-      <Button class="btn" type="primary" @click="createOutline()">生成大纲</Button>
+      <div class="setup">
+        <div class="toggle-btns">
+          <button
+            type="button"
+            @click="inputMethod = 'subject'"
+            :class="{ active: inputMethod === 'subject' }"
+          >
+            输入主题
+          </button>
+
+          <button
+            type="button"
+            @click="inputMethod = 'file'"
+            :class="{ active: inputMethod === 'file' }"
+          >
+            上传文件
+          </button>
+
+          <button
+            type="button"
+            @click="inputMethod = 'embed'"
+            :class="{ active: inputMethod === 'embed' }"
+          >
+            根据论文
+          </button>
+        </div>
+
+        <div class="input-area">
+          <div class="title" v-if="inputMethod === 'subject'">
+            <h2>PPT主题</h2>
+            <p>请输入您想要生成的PPT主题</p>
+          </div>
+
+          <div class="title" v-else-if="inputMethod === 'file'">
+            <h2>上传文件</h2>
+            <p>支持上传 .docx 和 .pdf 格式的文件</p>
+          </div>
+
+          <div class="title" v-else-if="inputMethod === 'embed'">
+            <h2>根据论文</h2>
+            <p>根据您当前的论文直接生成对应的PPT大纲</p>
+          </div>
+
+          <input
+            class="input"
+            type="text"
+            name="ppt-theme"
+            v-bind:value="content.text"
+            placeholder="请输入PPT主题"
+            @input="handleFileChange"
+            v-if="inputMethod === 'subject'"
+          />
+
+          <label class="input" v-if="inputMethod === 'file'" for="ppt-file" style="cursor: pointer">
+            <span v-if="!content.file">上传文件：支持上传 .docx 和 .pdf 格式的文件</span>
+            <span v-else>{{ content.file.name }}</span>
+            <input id="ppt-file" style="display: none" type="file" @change="handleFileChange" />
+          </label>
+
+          <p class="input" v-if="inputMethod === 'embed'">
+            <span>当前论文：本科毕业设计（论文）</span>
+          </p>
+        </div>
+
+        <div class="btns">
+          <Button class="btn" @click="step = 'outline'" v-if="outline.length">查看已有大纲</Button>
+          <Button class="btn" type="primary" @click="createOutline()">
+            <span v-if="outline">重新生成大纲</span>
+            <span v-else>生成大纲</span>
+          </Button>
+        </div>
+      </div>
     </template>
 
     <div class="preview" v-if="step === 'outline'">
@@ -28,7 +99,7 @@
         <OutlineEditor v-model:value="outline" />
       </div>
       <div class="btns" v-if="!outlineCreating">
-        <Button class="btn" @click="createOutline()">重新生成</Button>
+        <Button class="btn" @click="step = 'setup'">重新生成</Button>
         <Button class="btn" type="primary" @click="step = 'template'">选择模板</Button>
       </div>
     </div>
@@ -67,12 +138,16 @@
   import type { AIPPTSlide } from '@/types/AIPPT'
 
   import Button from '@/components/Button.vue'
-  import FullscreenSpin from '@/components/FullscreenSpin.vue'
   import OutlineEditor from '@/components/OutlineEditor.vue'
+  import FullscreenSpin from '@/components/FullscreenSpin.vue'
+  import type { Slide } from '@/types/slides'
 
   const mainStore = useMainStore()
   const { templates } = storeToRefs(useSlidesStore())
   const { AIPPT, getMdContent } = useAIPPT()
+
+  const content = ref<{ text: string | null; file: File | null }>({ text: null, file: null })
+  const inputMethod = ref<'subject' | 'file' | 'embed'>('subject')
 
   const outline = ref('')
   const selectedTemplate = ref('template_1')
@@ -81,94 +156,61 @@
   const outlineRef = ref<HTMLElement>()
   const step = ref<'setup' | 'outline' | 'template'>('setup')
 
+  function handleFileChange(event: Event) {
+    const target = event.target as HTMLInputElement
+    if (target.type === 'file') {
+      content.value.file = target.files?.[0] ?? null
+      target.value = ''
+    } else content.value.text = target.value
+  }
+
   const createOutline = async () => {
-    loading.value = true
-    outlineCreating.value = true
+    let input: string | File | null = null
 
-    const res = await genereatePPTOutline('mraddict', 'test')
-    if (typeof res === 'string') {
-      message.error(res)
-      loading.value = false
-      outlineCreating.value = false
-      return
-    }
+    if (inputMethod.value === 'subject') input = content.value.text
+    else if (inputMethod.value === 'file') input = content.value.file
 
-    loading.value = false
+    if (!input) return message.error('请输入主题或上传文件')
+
     outline.value = ''
     step.value = 'outline'
+    outlineCreating.value = true
 
-    const decoder = new TextDecoder('utf-8')
-
-    const readStream = () => {
-      res.read().then(({ done, value }) => {
-        if (done) {
-          outline.value = getMdContent(outline.value)
-          outlineCreating.value = false
-          return
-        }
-
-        const chunk = decoder.decode(value, { stream: true })
-        outline.value += chunk
-
-        if (outlineRef.value) {
-          outlineRef.value.scrollTop = outlineRef.value.scrollHeight + 20
-        }
-
-        readStream()
-      })
+    function handleReceiveData(data: string) {
+      outline.value += data
+      if (outlineRef.value) outlineRef.value.scrollTop = outlineRef.value.scrollHeight + 20
     }
-    readStream()
+
+    const res = await genereatePPTOutline(inputMethod.value, input, handleReceiveData)
+
+    if (!res.success) message.error(res.message)
+    else outline.value = getMdContent(outline.value)
+
+    outlineCreating.value = false
   }
 
   const createPPT = async () => {
+    let input: string | File | null = null
+
+    if (inputMethod.value === 'subject') input = content.value.text
+    else if (inputMethod.value === 'file') input = content.value.file
+
+    if (!input) return message.error('请输入主题或上传文件')
+
     loading.value = true
-
-    const res = await generatePPTSlides('mraddict', 'test', outline.value)
-    if (typeof res === 'string') {
-      message.error(res)
-      loading.value = false
-      return
-    }
-
-    const decoder = new TextDecoder('utf-8')
     const templateSlides = (await mocks).templates[selectedTemplate.value]
 
-    let chunk = ''
-
-    const readStream = () => {
-      const renderPPT = (content: string | string[]) => {
-        const lines = Array.isArray(content) ? content : content.split('\n')
-        lines
-          .filter((l) => l.trim().length)
-          .forEach((line) => {
-            try {
-              const slide: AIPPTSlide = JSON.parse(line)
-              AIPPT(templateSlides, [slide])
-            } catch (err) {
-              console.error(err)
-            }
-          })
-      }
-
-      res.read().then(({ done, value }) => {
-        if (done) {
-          if (chunk) renderPPT(chunk)
-
-          loading.value = false
-          mainStore.setAIPPTDialogState(false)
-          return
-        }
-
-        chunk += decoder.decode(value, { stream: true })
-        const lines = chunk.split('\n')
-        chunk = lines.pop() ?? ''
-
-        renderPPT(lines)
-
-        readStream()
-      })
+    function handleReceiveData(slide: AIPPTSlide) {
+      try {
+        AIPPT(templateSlides, [slide])
+      } catch (err) {}
     }
-    readStream()
+
+    const res = await generatePPTSlides(inputMethod.value, outline.value, input, handleReceiveData)
+    if (!res.success) message.error(res.message)
+    else mainStore.setAIPPTDialogState(false)
+
+    loading.value = false
   }
 </script>
 
@@ -268,6 +310,78 @@
     }
     100% {
       transform: rotate(360deg);
+    }
+  }
+
+  .setup {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    color: black;
+
+    .toggle-btns {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 7px;
+      background-color: #f1f1f1;
+      border-radius: 7px;
+
+      button {
+        padding: 8px 16px;
+        border-radius: 4px;
+        border: none;
+        cursor: pointer;
+
+        &.active {
+          background-color: white;
+        }
+      }
+    }
+
+    .input-area {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .title {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+
+        h2 {
+          font-size: 15px;
+          font-weight: normal;
+        }
+
+        p {
+          font-size: 12px;
+          color: #888;
+        }
+      }
+
+      .input {
+        font-size: 14px;
+        outline: none;
+        padding: 14px;
+        border-radius: 6px;
+        border: 1px solid #dcdcdc;
+
+        &:focus {
+          border-color: $themeColor;
+        }
+      }
+    }
+
+    .btns {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
     }
   }
 </style>
