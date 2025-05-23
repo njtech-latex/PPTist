@@ -11,7 +11,9 @@ import message from '@/utils/message'
 import usePasteTextClipboardData from '@/hooks/usePasteTextClipboardData'
 import useHistorySnapshot from '@/hooks/useHistorySnapshot'
 import useAddSlidesOrElements from '@/hooks/useAddSlidesOrElements'
+import { mocks } from '@/configs/mocks'
 import { loadSlides } from '@/store/slides'
+import { LOCALSTORAGE_KEY_SLIDES } from '@/configs/storage'
 
 export default () => {
   const mainStore = useMainStore()
@@ -30,26 +32,9 @@ export default () => {
   const { addHistorySnapshot } = useHistorySnapshot()
 
   // 重置幻灯片
-  const resetSlides = () => {
-    const emptySlide: Slide = {
-      id: nanoid(10),
-      elements: [],
-      background: {
-        type: 'solid',
-        color: theme.value.backgroundColor,
-      },
-    }
-    mainStore.setActiveElementIdList([])
-    slidesStore.updateSlideIndex(0)
-
-    const initSlides = loadSlides('default')
-
-    slidesStore.setTitle(initSlides.title)
-    slidesStore.setTheme(initSlides.theme)
-    slidesStore.setViewportSize(initSlides.viewportSize)
-    slidesStore.setViewportRatio(initSlides.viewportRatio)
-    slidesStore.setSlides([emptySlide])
-    slidesStore.setTemplates(initSlides.templates)
+  const resetSlides = async () => {
+    localStorage.removeItem(LOCALSTORAGE_KEY_SLIDES)
+    window.location.reload()
   }
 
   /**

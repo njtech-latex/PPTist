@@ -38,7 +38,7 @@ export interface SlidesState {
 const defaultSlidesState: SlidesState = {
   title: '未命名演示文稿', // 幻灯片标题
   theme: {
-    themeColors: ['#5b9bd5', '#ed7d31', '#a5a5a5', '#ffc000', '#4472c4', '#70ad47'],
+    themeColors: ['#14b8a6', '#0d9488', '#ed7d31', '#a5a5a5', '#ffc000', '#4472c4'],
     fontColor: '#333',
     fontName: '',
     backgroundColor: '#fff',
@@ -70,17 +70,17 @@ const defaultSlidesState: SlidesState = {
  * @description 从 localStorage 中加载幻灯片数据
  */
 export function loadSlides(type: 'localStorage' | 'default' = 'localStorage'): SlidesState {
-  if (type === 'default') return defaultSlidesState
+  if (type === 'default') return { ...defaultSlidesState }
 
   const slides = localStorage.getItem(LOCALSTORAGE_KEY_SLIDES)
-  if (!slides) return defaultSlidesState
+  if (!slides) return { ...defaultSlidesState }
 
   try {
     const parsed = JSON.parse(slides)
     return { ...defaultSlidesState, ...parsed }
   } catch (err) {
     console.error(err)
-    return defaultSlidesState
+    return { ...defaultSlidesState }
   }
 }
 

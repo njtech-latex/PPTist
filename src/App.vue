@@ -37,11 +37,8 @@
     // 加载并持久化 slides 数据
     const initSlides = loadSlides()
 
-    if (initSlides.slides.length) {
-      slidesStore.setSlides(initSlides.slides)
-    } else {
-      slidesStore.setSlides((await mocks).initSlides)
-    }
+    if (initSlides.slides.length) slidesStore.setSlides(initSlides.slides)
+    else slidesStore.setSlides([...(await mocks).initSlides])
 
     slidesStore.setTitle(initSlides.title)
     slidesStore.setTheme(initSlides.theme)

@@ -3,6 +3,17 @@
     <div class="left">
       <Popover trigger="click" placement="bottom-start" v-model:value="mainMenuVisible">
         <template #content>
+          <PopoverMenuItem @click="setDialogForExport('pptx')">导出文件</PopoverMenuItem>
+          <PopoverMenuItem
+            @click="
+              () => {
+                mainMenuVisible = false
+                hotkeyDrawerVisible = true
+              }
+            "
+          >
+            快捷操作
+          </PopoverMenuItem>
           <PopoverMenuItem
             @click="
               () => {
@@ -12,39 +23,6 @@
             "
           >
             AI 生成 PPT
-          </PopoverMenuItem>
-          <FileInput
-            accept="application/vnd.openxmlformats-officedocument.presentationml.presentation"
-            @change="
-              (files) => {
-                importPPTXFile(files)
-                mainMenuVisible = false
-              }
-            "
-          >
-            <PopoverMenuItem>导入 pptx 文件（测试版）</PopoverMenuItem>
-          </FileInput>
-          <FileInput
-            accept=".pptist"
-            @change="
-              (files) => {
-                importSpecificFile(files)
-                mainMenuVisible = false
-              }
-            "
-          >
-            <PopoverMenuItem>导入 pptist 文件</PopoverMenuItem>
-          </FileInput>
-          <PopoverMenuItem @click="setDialogForExport('pptx')">导出文件</PopoverMenuItem>
-          <PopoverMenuItem
-            @click="
-              () => {
-                resetSlides()
-                mainMenuVisible = false
-              }
-            "
-          >
-            重置幻灯片
           </PopoverMenuItem>
           <PopoverMenuItem
             @click="
@@ -59,13 +37,35 @@
           <PopoverMenuItem
             @click="
               () => {
+                resetSlides()
                 mainMenuVisible = false
-                hotkeyDrawerVisible = true
               }
             "
           >
-            快捷操作
+            重置幻灯片数据
           </PopoverMenuItem>
+          <FileInput
+            accept=".pptist"
+            @change="
+              (files) => {
+                importSpecificFile(files)
+                mainMenuVisible = false
+              }
+            "
+          >
+            <PopoverMenuItem>导入 pptist 文件</PopoverMenuItem>
+          </FileInput>
+          <FileInput
+            accept="application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            @change="
+              (files) => {
+                importPPTXFile(files)
+                mainMenuVisible = false
+              }
+            "
+          >
+            <PopoverMenuItem>导入 pptx 文件（测试版）</PopoverMenuItem>
+          </FileInput>
         </template>
         <div class="menu-item"><IconHamburgerButton class="icon" /></div>
       </Popover>

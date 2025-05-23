@@ -20,7 +20,7 @@
 
     <template v-if="step === 'setup'">
       <div class="setup">
-        <div class="toggle-btns">
+        <div class="toggle-btns" v-if="isEmbed || getEnv().dev">
           <button
             type="button"
             @click="inputMethod = 'subject'"
@@ -53,18 +53,18 @@
 
           <div class="title" v-else-if="inputMethod === 'embed'">
             <h2>根据论文</h2>
-            <p>根据您当前的论文直接生成对应的PPT大纲</p>
+            <p>根据您当前的论文生成对应的PPT大纲</p>
             <input
               class="input"
               type="text"
               name="ppt-embed"
-              placeholder="请输入论文链接，格式为 open_id/slug"
               v-model="content.embed"
+              :disabled="isEmbed"
             />
           </div>
 
           <div class="title">
-            <h2>深度思考：</h2>
+            <h2>深度思考</h2>
             <p class="subtite">深度思考会让AI更深入的理解您的内容</p>
             <Switch v-model:value="deepThink" />
           </div>
@@ -114,12 +114,14 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue'
+  import z from 'zod'
   import { storeToRefs } from 'pinia'
+  import { onMounted, onUnmounted, ref } from 'vue'
 
   import message from '@/utils/message'
   import useAIPPT from '@/hooks/useAIPPT'
   import { mocks } from '@/configs/mocks'
+  import { getEnv } from './lib/utils/getEnv'
   import { useMainStore, useSlidesStore } from '@/store'
   import { generatePPTSlides, genereatePPTOutline } from './lib/api'
   import type { AIPPTSlide } from '@/types/AIPPT'
@@ -130,11 +132,12 @@
   import FullscreenSpin from '@/components/FullscreenSpin.vue'
 
   const mainStore = useMainStore()
-  const { templates } = storeToRefs(useSlidesStore())
   const { AIPPT, getMdContent } = useAIPPT()
+  const { templates } = storeToRefs(useSlidesStore())
 
-  const content = ref<{ subject: string; embed: string }>({ subject: '', embed: '' })
   const inputMethod = ref<'subject' | 'embed'>('subject')
+  const content = ref<{ subject: string; embed: string }>({ subject: '', embed: '' })
+  const isEmbed = ref(new URLSearchParams(window.location.search).get('embed') === 'true')
 
   const deepThink = ref(false)
   const outline = ref('')
@@ -204,6 +207,28 @@
 
     loading.value = false
   }
+
+  const handleMessage = (event: MessageEvent) => {
+    if (event.source === window) return
+    if (content.value.embed) return
+
+    // 解析消息
+    const schema = z.object({ open_id: z.string(), slug: z.string() })
+    const parsed = schema.safeParse(event.data.presentation)
+    if (!parsed.success) return
+
+    isEmbed.value = true
+    inputMethod.value = 'embed'
+    content.value.embed = `${parsed.data.open_id}/${parsed.data.slug}`
+  }
+
+  onMounted(() => {
+    window.parent.postMessage({ presentation: { action: 'init' } }, '*')
+    window.addEventListener('message', handleMessage)
+  })
+  onUnmounted(() => {
+    window.removeEventListener('message', handleMessage)
+  })
 </script>
 
 <style lang="scss" scoped>

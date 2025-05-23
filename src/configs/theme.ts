@@ -12,6 +12,13 @@ export const PRESET_THEMES: PresetTheme[] = [
     fontColor: '#333333',
     borderColor: '#41719c',
     fontname: '',
+    colors: ['#14b8a6', '#0d9488', '#ed7d31', '#a5a5a5', '#ffc000', '#4472c4'],
+  },
+  {
+    background: '#ffffff',
+    fontColor: '#333333',
+    borderColor: '#41719c',
+    fontname: '',
     colors: ['#5b9bd5', '#ed7d31', '#a5a5a5', '#ffc000', '#4472c4', '#70ad47'],
   },
   {
