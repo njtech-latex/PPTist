@@ -31,14 +31,6 @@
 
           <button
             type="button"
-            @click="inputMethod = 'file'"
-            :class="{ active: inputMethod === 'file' }"
-          >
-            上传文件
-          </button>
-
-          <button
-            type="button"
             @click="inputMethod = 'embed'"
             :class="{ active: inputMethod === 'embed' }"
           >
@@ -52,11 +44,6 @@
             <p>请输入您想要生成的PPT主题</p>
           </div>
 
-          <div class="title" v-else-if="inputMethod === 'file'">
-            <h2>上传文件</h2>
-            <p>支持上传 .docx 和 .pdf 格式的文件</p>
-          </div>
-
           <div class="title" v-else-if="inputMethod === 'embed'">
             <h2>根据论文</h2>
             <p>根据您当前的论文直接生成对应的PPT大纲</p>
@@ -65,22 +52,20 @@
           <input
             class="input"
             type="text"
-            name="ppt-theme"
-            v-bind:value="content.text"
+            name="ppt-subject"
             placeholder="请输入PPT主题"
-            @input="handleFileChange"
+            v-model="content.subject"
             v-if="inputMethod === 'subject'"
           />
 
-          <label class="input" v-if="inputMethod === 'file'" for="ppt-file" style="cursor: pointer">
-            <span v-if="!content.file">上传文件：支持上传 .docx 和 .pdf 格式的文件</span>
-            <span v-else>{{ content.file.name }}</span>
-            <input id="ppt-file" style="display: none" type="file" @change="handleFileChange" />
-          </label>
-
-          <p class="input" v-if="inputMethod === 'embed'">
-            <span>当前论文：本科毕业设计（论文）</span>
-          </p>
+          <input
+            class="input"
+            type="text"
+            name="ppt-embed"
+            placeholder="请输入论文链接，格式为 open_id/slug"
+            v-model="content.embed"
+            v-if="inputMethod === 'embed'"
+          />
         </div>
 
         <div class="btns">
@@ -145,9 +130,10 @@
   const { templates } = storeToRefs(useSlidesStore())
   const { AIPPT, getMdContent } = useAIPPT()
 
-  const content = ref<{ text: string | null; file: File | null }>({ text: null, file: null })
-  const inputMethod = ref<'subject' | 'file' | 'embed'>('subject')
+  const content = ref<{ subject: string; embed: string }>({ subject: '', embed: '' })
+  const inputMethod = ref<'subject' | 'embed'>('subject')
 
+  const deep_think = ref(false)
   const outline = ref('')
   const selectedTemplate = ref('template_1')
   const loading = ref(false)
@@ -155,21 +141,17 @@
   const outlineRef = ref<HTMLElement>()
   const step = ref<'setup' | 'outline' | 'template'>('setup')
 
-  function handleFileChange(event: Event) {
-    const target = event.target as HTMLInputElement
-    if (target.type === 'file') {
-      content.value.file = target.files?.[0] ?? null
-      target.value = ''
-    } else content.value.text = target.value
-  }
-
   const createOutline = async () => {
-    let input: string | File | null = null
+    // TODO: 这里需要根据用户选择的主题或论文链接生成大纲
+    // 目前只支持 embed 类型
+    if (inputMethod.value !== 'embed') return message.error('请使用论文链接生成大纲')
 
-    if (inputMethod.value === 'subject') input = content.value.text
-    else if (inputMethod.value === 'file') input = content.value.file
-
-    if (!input) return message.error('请输入主题或上传文件')
+    const input = (() => {
+      const [open_id, slug] = content.value.embed.split('/')
+      if (!open_id || !slug) return null
+      return { open_id, slug }
+    })()
+    if (!input) return message.error('请输入正确的论文链接，格式为 open_id/slug')
 
     outline.value = ''
     step.value = 'outline'
@@ -180,7 +162,9 @@
       if (outlineRef.value) outlineRef.value.scrollTop = outlineRef.value.scrollHeight + 20
     }
 
-    const res = await genereatePPTOutline(inputMethod.value, input, handleReceiveData)
+    const body = { deep_think: deep_think.value }
+    const options = { type: 'embed', ...input } as const
+    const res = await genereatePPTOutline(body, options, handleReceiveData)
 
     if (!res.success) message.error(res.message)
     else outline.value = getMdContent(outline.value)
@@ -189,12 +173,16 @@
   }
 
   const createPPT = async () => {
-    let input: string | File | null = null
+    // TODO: 这里需要根据用户选择的主题或论文链接生成大纲
+    // 目前只支持 embed 类型
+    if (inputMethod.value !== 'embed') return message.error('请使用论文链接生成大纲')
 
-    if (inputMethod.value === 'subject') input = content.value.text
-    else if (inputMethod.value === 'file') input = content.value.file
-
-    if (!input) return message.error('请输入主题或上传文件')
+    const input = (() => {
+      const [open_id, slug] = content.value.embed.split('/')
+      if (!open_id || !slug) return null
+      return { open_id, slug }
+    })()
+    if (!input) return message.error('请输入正确的论文链接，格式为 open_id/slug')
 
     loading.value = true
     const templateSlides = (await mocks).templates[selectedTemplate.value]
@@ -205,7 +193,9 @@
       } catch (err) {}
     }
 
-    const res = await generatePPTSlides(inputMethod.value, outline.value, input, handleReceiveData)
+    const body = { deep_think: deep_think.value, outline: outline.value }
+    const options = { type: 'embed', ...input } as const
+    const res = await generatePPTSlides(body, options, handleReceiveData)
     if (!res.success) message.error(res.message)
     else mainStore.setAIPPTDialogState(false)
 
@@ -323,7 +313,7 @@
     .toggle-btns {
       width: 100%;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       padding: 7px;
       background-color: #f1f1f1;
       border-radius: 7px;

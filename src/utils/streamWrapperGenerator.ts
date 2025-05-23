@@ -7,7 +7,7 @@ import type { ApiResultType } from '@/types/app'
  */
 export default async function* streamWrapperGenerator<T>(
   response: Promise<Response>
-): AsyncGenerator<string, ApiResultType<string>, unknown> {
+): AsyncGenerator<string[], ApiResultType<string[]>, unknown> {
   try {
     const res = await response
 
@@ -19,15 +19,24 @@ export default async function* streamWrapperGenerator<T>(
     const reader = res.body.getReader()
     const decoder = new TextDecoder('utf-8')
 
-    let result: string = ''
+    let chunk = ''
+    const result: string[] = []
 
     while (true) {
       const { done, value } = await reader.read()
       if (done) break
 
-      const chunk = decoder.decode(value, { stream: true })
-      result += chunk
-      yield chunk
+      chunk += decoder.decode(value, { stream: true })
+      const lines = chunk.split('\n')
+      chunk = lines.pop() ?? ''
+
+      const data = lines
+        .filter((line) => line.startsWith('data: '))
+        .map((line) => line.slice(6))
+        .filter((line) => line !== '[DONE]')
+
+      result.push(...data)
+      yield data
     }
 
     return { success: true, data: result }
