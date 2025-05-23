@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import url from './utils/url'
+import url from '@/utils/url'
 import streamWrapperGenerator from '@/utils/streamWrapperGenerator'
 import type { AIPPTSlide } from '@/types/AIPPT'
 import type { ApiResultType } from '@/types/app'

@@ -20,7 +20,7 @@
 
     <template v-if="step === 'setup'">
       <div class="setup">
-        <div class="toggle-btns" v-if="isEmbed || getEnv().dev">
+        <div class="toggle-btns" v-if="mainStore.isEmbed || getEnv().dev">
           <button
             type="button"
             @click="inputMethod = 'subject'"
@@ -59,7 +59,7 @@
               type="text"
               name="ppt-embed"
               v-model="content.embed"
-              :disabled="isEmbed"
+              :disabled="mainStore.isEmbed"
             />
           </div>
 
@@ -121,7 +121,7 @@
   import message from '@/utils/message'
   import useAIPPT from '@/hooks/useAIPPT'
   import { mocks } from '@/configs/mocks'
-  import { getEnv } from './lib/utils/getEnv'
+  import { getEnv } from '@/utils/getEnv'
   import { useMainStore, useSlidesStore } from '@/store'
   import { generatePPTSlides, genereatePPTOutline } from './lib/api'
   import type { AIPPTSlide } from '@/types/AIPPT'
@@ -137,7 +137,6 @@
 
   const inputMethod = ref<'subject' | 'embed'>('subject')
   const content = ref<{ subject: string; embed: string }>({ subject: '', embed: '' })
-  const isEmbed = ref(new URLSearchParams(window.location.search).get('embed') === 'true')
 
   const deepThink = ref(false)
   const outline = ref('')
@@ -217,7 +216,7 @@
     const parsed = schema.safeParse(event.data.presentation)
     if (!parsed.success) return
 
-    isEmbed.value = true
+    mainStore.setIsEmbedState(true)
     inputMethod.value = 'embed'
     content.value.embed = `${parsed.data.open_id}/${parsed.data.slug}`
   }

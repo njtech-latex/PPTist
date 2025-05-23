@@ -37,6 +37,7 @@ export interface MainState {
   showNotesPanel: boolean
   showMarkupPanel: boolean
   showAIPPTDialog: boolean
+  isEmbed: boolean
 }
 
 const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
@@ -72,7 +73,8 @@ export const useMainStore = defineStore('main', {
     showSearchPanel: false, // 打开查找替换面板
     showNotesPanel: false, // 打开批注面板
     showMarkupPanel: false, // 打开类型标注面板
-    showAIPPTDialog: false, // 打开AIPPT创建窗口
+    showAIPPTDialog: false, // 打开AIPPT创建窗口,
+    isEmbed: new URLSearchParams(window.location.search).get('embed') === 'true', // 是否嵌入式编辑器
   }),
 
   getters: {
@@ -207,6 +209,10 @@ export const useMainStore = defineStore('main', {
 
     setAIPPTDialogState(show: boolean) {
       this.showAIPPTDialog = show
+    },
+
+    setIsEmbedState(isEmbed: boolean) {
+      this.isEmbed = isEmbed
     },
   },
 })
