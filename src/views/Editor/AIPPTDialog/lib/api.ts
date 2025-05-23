@@ -21,7 +21,7 @@ export async function genereatePPTOutline(
 ): Promise<ApiResultType<string>> {
   // TODO: 这里需要根据不同的类型来处理
   // 目前只支持 embed 类型
-  if (options.type !== 'embed') return { success: false, message: 'subject not support' }
+  if (options.type !== 'embed') return { success: false, message: '目前只支持根据论文生成大纲' }
 
   const apiPath = `/api/compile/v1/users/${options.open_id}/projects/${options.slug}/ppt/outline`
   const res = fetch(url(apiPath), {
@@ -63,7 +63,7 @@ export async function generatePPTSlides(
 ): Promise<Promise<ApiResultType<AIPPTSlide[]>>> {
   // TODO: 这里需要根据不同的类型来处理
   // 目前只支持 embed 类型
-  if (options.type !== 'embed') return { success: false, message: '目前只支持 embed 类型' }
+  if (options.type !== 'embed') return { success: false, message: '目前只支持根据论文生成大纲' }
 
   const apiPath = `/api/compile/v1/users/${options.open_id}/projects/${options.slug}/ppt/slides`
   const res = fetch(url(apiPath), {

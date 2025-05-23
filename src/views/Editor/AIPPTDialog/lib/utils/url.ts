@@ -1,6 +1,5 @@
 import { getEnv } from './getEnv'
 
-// const devServer = 'http://127.0.0.1:3412'
 const devServer = 'https://dev.keepresearch.com'
 const productionServer = 'https://www.keepresearch.com'
 

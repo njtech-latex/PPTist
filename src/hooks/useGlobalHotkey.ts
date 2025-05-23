@@ -131,7 +131,8 @@ export default () => {
     const { ctrlKey, shiftKey, altKey, metaKey } = e
     const ctrlOrMetaKeyActive = ctrlKey || metaKey
 
-    const key = e.key.toUpperCase()
+    const key = e.key?.toUpperCase()
+    if (!key) return
 
     if (ctrlOrMetaKeyActive && !ctrlKeyState.value) keyboardStore.setCtrlKeyState(true)
     if (shiftKey && !shiftKeyState.value) keyboardStore.setShiftKeyState(true)

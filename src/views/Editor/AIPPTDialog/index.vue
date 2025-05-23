@@ -42,30 +42,32 @@
           <div class="title" v-if="inputMethod === 'subject'">
             <h2>PPT主题</h2>
             <p>请输入您想要生成的PPT主题</p>
+            <input
+              class="input"
+              type="text"
+              name="ppt-subject"
+              placeholder="请输入PPT主题"
+              v-model="content.subject"
+            />
           </div>
 
           <div class="title" v-else-if="inputMethod === 'embed'">
             <h2>根据论文</h2>
             <p>根据您当前的论文直接生成对应的PPT大纲</p>
+            <input
+              class="input"
+              type="text"
+              name="ppt-embed"
+              placeholder="请输入论文链接，格式为 open_id/slug"
+              v-model="content.embed"
+            />
           </div>
 
-          <input
-            class="input"
-            type="text"
-            name="ppt-subject"
-            placeholder="请输入PPT主题"
-            v-model="content.subject"
-            v-if="inputMethod === 'subject'"
-          />
-
-          <input
-            class="input"
-            type="text"
-            name="ppt-embed"
-            placeholder="请输入论文链接，格式为 open_id/slug"
-            v-model="content.embed"
-            v-if="inputMethod === 'embed'"
-          />
+          <div class="title">
+            <h2>深度思考：</h2>
+            <p class="subtite">深度思考会让AI更深入的理解您的内容</p>
+            <Switch v-model:value="deepThink" />
+          </div>
         </div>
 
         <div class="btns">
@@ -122,6 +124,7 @@
   import { generatePPTSlides, genereatePPTOutline } from './lib/api'
   import type { AIPPTSlide } from '@/types/AIPPT'
 
+  import Switch from '@/components/Switch.vue'
   import Button from '@/components/Button.vue'
   import OutlineEditor from '@/components/OutlineEditor.vue'
   import FullscreenSpin from '@/components/FullscreenSpin.vue'
@@ -133,7 +136,7 @@
   const content = ref<{ subject: string; embed: string }>({ subject: '', embed: '' })
   const inputMethod = ref<'subject' | 'embed'>('subject')
 
-  const deep_think = ref(false)
+  const deepThink = ref(false)
   const outline = ref('')
   const selectedTemplate = ref('template_1')
   const loading = ref(false)
@@ -144,7 +147,7 @@
   const createOutline = async () => {
     // TODO: 这里需要根据用户选择的主题或论文链接生成大纲
     // 目前只支持 embed 类型
-    if (inputMethod.value !== 'embed') return message.error('请使用论文链接生成大纲')
+    if (inputMethod.value !== 'embed') return message.error('目前只支持根据论文生成大纲')
 
     const input = (() => {
       const [open_id, slug] = content.value.embed.split('/')
@@ -162,7 +165,7 @@
       if (outlineRef.value) outlineRef.value.scrollTop = outlineRef.value.scrollHeight + 20
     }
 
-    const body = { deep_think: deep_think.value }
+    const body = { deep_think: deepThink.value }
     const options = { type: 'embed', ...input } as const
     const res = await genereatePPTOutline(body, options, handleReceiveData)
 
@@ -193,7 +196,7 @@
       } catch (err) {}
     }
 
-    const body = { deep_think: deep_think.value, outline: outline.value }
+    const body = { deep_think: deepThink.value, outline: outline.value }
     const options = { type: 'embed', ...input } as const
     const res = await generatePPTSlides(body, options, handleReceiveData)
     if (!res.success) message.error(res.message)
@@ -334,12 +337,12 @@
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 18px;
 
       .title {
         display: flex;
         flex-direction: column;
-        gap: 7px;
+        gap: 5px;
 
         h2 {
           font-size: 15px;
@@ -349,6 +352,10 @@
         p {
           font-size: 12px;
           color: #888;
+        }
+
+        span.switch {
+          width: fit-content;
         }
       }
 
